@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from './logo.svg';
+import logo from './meet_app_logo.png';
 import './App.css';
 
 function App() {
