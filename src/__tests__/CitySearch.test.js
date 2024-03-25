@@ -55,4 +55,21 @@ describe('<CitySearch /> component', () => {
          expect(suggestionListItems[i].textContent).toBe(suggestions[i]);
       }
    });
+
+   test('renders the suggestion text in the textbox upon clicking on the suggestion', async () => {
+      const user = userEvent.setup();
+      const allEvents = await getEvents(); 
+      const allLocations = extractLocations(allEvents);
+      CitySearchComponent.rerender(<CitySearch allLocations={allLocations} />);
+
+      const cityTextBox = CitySearchComponent.queryByRole('textbox');   // get the textbox element from the DOM
+      await user.type(cityTextBox, "Berlin");                           // simulate user typing "Berlin" in the textbox
+  
+      // the suggestion's textContent look like this: "Berlin, Germany"
+      const BerlinGermanySuggestion = CitySearchComponent.queryAllByRole('listitem')[0];  // get the first suggestion from the list
+
+      await user.click(BerlinGermanySuggestion);   // simulate user clicking on the suggestion
+  
+      expect(cityTextBox).toHaveValue(BerlinGermanySuggestion.textContent);
+    });
 });
