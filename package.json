@@ -29,7 +29,7 @@
    "scripts": {
       "start": "react-scripts start",
       "build": "react-scripts build",
-      "test": "react-scripts test",
+      "test": "react-scripts test --coverage --watchAll",
       "eject": "react-scripts eject",
       "predeploy": "npm run build",
       "deploy": "gh-pages -d build"
@@ -54,5 +54,29 @@
    },
    "devDependencies": {
       "gh-pages": "^6.1.1"
+   },
+   "jest": {
+      "collectCoverageFrom": [
+         "src/**/*.js",
+         "!src/mock-data-from-google-and-cf.js",
+         "!src/reportWebVitals.js",
+         "!src/serviceWorkerRegistration.js",
+         "!src/service-worker.js",
+         "!src/index.js",
+         "!src/hooks/*.js",
+         "!src/context/*.js"
+      ],
+      "coverageThreshold": {
+         "global": {
+            "branches": 90,
+            "functions": 90,
+            "lines": 90,
+            "statements": 90
+         }
+      },
+      "coverageReporters": [
+         "html",
+         "text"
+      ]
    }
 }
