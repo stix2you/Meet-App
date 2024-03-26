@@ -16,6 +16,10 @@ describe('<Event /> component', () => {
       expect(EventComponent.queryByText(allEvents[0].summary)).toBeInTheDocument();
    });
 
+   test('renders event start time', () => {
+      expect(EventComponent.queryByText(allEvents[0].start.dateTime)).toBeInTheDocument();
+   });
+
    test('renders event location', () => {
       expect(EventComponent.queryByText(allEvents[0].location)).toBeInTheDocument();
    });
@@ -35,7 +39,7 @@ describe('<Event /> component', () => {
 
 
 
-   
+
    test('by default, the event details are hidden', () => {
       expect(EventComponent.queryByText('hide details')).not.toBeInTheDocument();
    });

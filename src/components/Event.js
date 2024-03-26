@@ -2,20 +2,25 @@ import { useState } from 'react';
 
 const Event = ({ event }) => {
 
+   const [showDetails, setShowDetails] = useState(false);  // this used to show or hide the event details
+
+   const handleShowDetails = () => {
+      setShowDetails(true);
+   };
+
+
    return (
-     <li>
-         <div className="event">
-               <h1 className="event-title">Event Title</h1>
-               <p className="event-location">Event Location</p>
-               <p className="event-date-time">Event Date and Time</p>
-               <button className="details-btn">show details</button>
-               <p className="event-details">Event Details</p>
-         </div>
-     </li>
+      <li className="event">
+         <h1 className="event-title">Event Title</h1>
+         <p className="event-location">Event Location</p>
+         <p className="event-date-time">Event Date and Time</p>
+         <button className="details-btn">show details</button>
+         <p className="event-details">Event Details</p>
+      </li>
    );
- }
- 
- export default Event;
+}
+
+export default Event;
 
 // Collapsed:
 //
@@ -25,7 +30,7 @@ const Event = ({ event }) => {
 // "show details" button
 
 // Expanded:
-// 
+//
 //    "description": "Have you wondered how you can ask Google to show you the list of the top ten must-see places in London? And how Google presents you the list? How can you submit the details of an application? Well, JavaScript is doing these. :) \n\nJavascript offers interactivity to a dull, static website. Come, learn JavaScript with us and make those beautiful websites.",
 // "hide details" button
 
