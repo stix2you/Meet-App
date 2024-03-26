@@ -7,29 +7,25 @@ describe('<Event /> component', () => {
    let EventComponent;
    let firstEvent;
 
-   // Fetches the list of events and renders the Event component before all tests
-   beforeAll(async () => {
+   // Fetches the list of events and renders the Event component before EACH test
+   beforeEach(async () => {
       const allEvents = await getEvents();
       firstEvent = allEvents[0]; // Save the first event for use in all tests
-      console.log("firstEvent after getting declared in event.test.js:", firstEvent);
       EventComponent = render(<Event event={firstEvent} />); // Render the Event component with the first event
    });
 
       // Tests that the Event component renders the event title
    test('renders event title', () => {
-      console.log("event title in test:", firstEvent.summary)
       expect(EventComponent.queryByText(firstEvent.summary)).toBeInTheDocument(); // Check that the DOM element contains the event title
    });
 
    // Tests that the Event component renders the event start time
    test('renders event start time', async () => {
-      console.log("event date/time in test:", firstEvent.created)
       expect(EventComponent.queryByText(firstEvent.created)).toBeInTheDocument();
     });
 
    // Tests that the Event component renders the event location
    test('renders event location', () => {
-      console.log("event location in test:", firstEvent.location)
       expect(EventComponent.queryByText(firstEvent.location)).toBeInTheDocument(); // Check that the DOM element contains the event location
    });
 
