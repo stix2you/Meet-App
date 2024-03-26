@@ -3,11 +3,8 @@ import { useState } from 'react';
 const Event = ({ event }) => {
 
    const [showDetails, setShowDetails] = useState(false);  // this used to show or hide the event details
-   // console.log(event);
-   // const handleShowDetails = () => {
-   //    setShowDetails(true);
-   // };
 
+   // console.log("event in Event.js:", event);
 
    return (
       <li className="event">
