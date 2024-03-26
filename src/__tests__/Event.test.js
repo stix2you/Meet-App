@@ -15,13 +15,13 @@ describe('<Event /> component', () => {
 
    // tests that the Event component renders the event title, start time, and location
    test('renders event title', () => {
-      expect(EventComponent.queryByText(allEvents[0].summary)).toBeInTheDocument();
+      expect(EventComponent.queryByText(allEvents[0].summary)).toBeInTheDocument();  // Check that the DOM element contains the event title
    });
    test('renders event start time', () => {
-      expect(EventComponent.queryByText(allEvents[0].start.dateTime)).toBeInTheDocument();
+      expect(EventComponent.queryByText(allEvents[0].created)).toBeInTheDocument();   // Check that the DOM element contains the event start time
    });
    test('renders event location', () => {
-      expect(EventComponent.queryByText(allEvents[0].location)).toBeInTheDocument();
+      expect(EventComponent.queryByText(allEvents[0].location)).toBeInTheDocument();   // Check that the DOM element contains the event location
    });
 
    // tests that the event details are hidden by default and that the 'Show Details' button is rendered

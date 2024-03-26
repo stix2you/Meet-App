@@ -3,7 +3,7 @@ import { useState } from 'react';
 const Event = ({ event }) => {
 
    const [showDetails, setShowDetails] = useState(false);  // this used to show or hide the event details
-
+   // console.log(event);
    // const handleShowDetails = () => {
    //    setShowDetails(true);
    // };
@@ -12,8 +12,8 @@ const Event = ({ event }) => {
    return (
       <li className="event">
          <h1 className="event-title">{event && event.summary}</h1>
-         <p className="event-location">{event && event.location}</p>
          <p className="event-date-time">{event && event.created}</p>
+         <p className="event-location">{event && event.location}</p>
          <div>
             {/* Conditionally render details based on showDetails */}
             {showDetails && (<p className="event-description">{event && event.description}</p>)}
