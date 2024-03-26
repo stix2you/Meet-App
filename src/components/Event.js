@@ -4,18 +4,24 @@ const Event = ({ event }) => {
 
    const [showDetails, setShowDetails] = useState(false);  // this used to show or hide the event details
 
-   const handleShowDetails = () => {
-      setShowDetails(true);
-   };
+   // const handleShowDetails = () => {
+   //    setShowDetails(true);
+   // };
 
 
    return (
       <li className="event">
-         <h1 className="event-title">Event Title</h1>
-         <p className="event-location">Event Location</p>
-         <p className="event-date-time">Event Date and Time</p>
-         <button className="details-btn">show details</button>
-         <p className="event-details">Event Details</p>
+         <h1 className="event-title">{event && event.summary}</h1>
+         <p className="event-location">{event && event.location}</p>
+         <p className="event-date-time">{event && event.created}</p>
+         <div>
+            {/* Conditionally render details based on showDetails */}
+            {showDetails && (<p className="event-description">{event && event.description}</p>)}
+            {/* Button to toggle showDetails */}
+            <button onClick={() => setShowDetails(!showDetails)}>
+            {showDetails ? 'Hide Details' : 'Show Details'}
+            </button>
+         </div>
       </li>
    );
 }
