@@ -13,6 +13,7 @@ function App() {
 
    // Initialize the allLocations state with the list of locations from the events list:
    const fetchData = async () => {
+      try {
       const allEvents = await getEvents();
       const filteredEvents = currentCity === "See all cities" ?
         allEvents :
@@ -21,6 +22,9 @@ function App() {
       console.log('Filtered Events:', filteredEvents);
       setEvents(filteredEvents.slice(0, currentNOE));
       setAllLocations(extractLocations(allEvents));
+      } catch (error) {
+         console.error('Error fetching data:', error);
+      }
     }
 
    // Fetch the list of events when the component mounts
