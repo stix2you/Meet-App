@@ -6,6 +6,7 @@ import App from '../App';
 
 describe('<CitySearch /> component', () => {
    let CitySearchComponent;
+
    beforeEach(() => {
       CitySearchComponent = render(<CitySearch allLocations={[]}/>);  // dummy prop passed to the CitySearch component
    });
@@ -74,6 +75,24 @@ describe('<CitySearch /> component', () => {
 
       expect(cityTextBox).toHaveValue(BerlinGermanySuggestion.textContent);
    });
+
+   test('suggestion list should have only one item ("See all cities") when user types a city that does not exist', async () => {
+      const user = userEvent.setup();
+      const allEvents = await getEvents();
+      const allLocations = extractLocations(allEvents);
+      CitySearchComponent.rerender(<CitySearch allLocations={allLocations} />);
+    
+      // Simulate user typing "Paris, France" in the city textbox
+      const cityTextBox = CitySearchComponent.queryByRole('textbox');
+      await user.type(cityTextBox, "XXX, XXX");
+    
+      // Get all <li> elements inside the suggestion list
+      const suggestionListItems = CitySearchComponent.queryAllByRole('listitem');
+      
+      // Expect the suggestion list to have only one item ("See all cities")
+      expect(suggestionListItems).toHaveLength(1);
+      expect(suggestionListItems[0]).toHaveTextContent('See all cities');
+    });
 });
 
 describe('<CitySearch /> integration', () => {

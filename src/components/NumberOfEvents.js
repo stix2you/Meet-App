@@ -18,7 +18,7 @@ class NumberOfEvents extends Component {
                className="number-of-events"
                value={this.state.numberOfEvents}
                onChange={this.handleInputChange}
-               role="textbox"
+               // role="textbox"
             />
          </div>
       );
