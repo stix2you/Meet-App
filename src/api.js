@@ -13,6 +13,14 @@ export const extractLocations = (events) => {
    return locations;
 };
 
+const checkToken = async (accessToken) => {
+   const response = await fetch(
+      `https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=${accessToken}`
+   );
+   const result = await response.json();
+   return result;
+};
+
 const removeQuery = () => {
    let newurl;
    if (window.history.pushState && window.location.pathname) {
@@ -67,14 +75,6 @@ const getToken = async (code) => {
 export const getAccessToken = async () => {
    const accessToken = localStorage.getItem('access_token');   // get the access token from local storage
    const tokenCheck = accessToken && (await checkToken(accessToken));   // check if the token is valid
-
-   const checkToken = async (accessToken) => {
-      const response = await fetch(
-         `https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=${accessToken}`
-      );
-      const result = await response.json();
-      return result;
-   };
 
    if (!accessToken || tokenCheck.error) {
       await localStorage.removeItem("access_token");
