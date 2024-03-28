@@ -19,8 +19,9 @@ function App() {
         allEvents :
         allEvents.filter(event => event.location === currentCity)
       
-      console.log('Filtered Events:', filteredEvents);
-      setEvents(filteredEvents.slice(0, currentNOE));
+      console.log('All Events in fetchData function in app.js:', allEvents);
+      console.log('Filtered Events in fetchData function, app.js:', filteredEvents);
+      setEvents(filteredEvents.slice(0, currentNOE));   // set the events state to the list of events
       setAllLocations(extractLocations(allEvents));
       } catch (error) {
          console.error('Error fetching data:', error);
