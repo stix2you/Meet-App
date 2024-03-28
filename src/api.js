@@ -58,7 +58,7 @@ export const getEvents = async () => {
          const result = await response.json();
          console.log('Result in getEvents function api.js:', result);
          console.log('Result.events in getEvents function api.js:', result.events);
-         return Array.isArray(result.events) ? result.events : [];  // return the list of events if the result is an array
+         return Array.isArray(result) ? result : [];  // return the list of events if the result is an array
       } catch (error) {
          console.error('Error fetching events:', error);  // log an error if there is an error fetching the events
       }
