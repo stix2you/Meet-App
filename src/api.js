@@ -14,7 +14,7 @@ export const extractLocations = (events) => {
 };
 
 // This function will check if the token is valid
-const checkToken = async (accessToken) => {    
+const checkToken = async (accessToken) => {
    const response = await fetch(                    // send a request to the API to check if the token is valid
       `https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=${accessToken}`
    );
@@ -42,7 +42,7 @@ export const getEvents = async () => {
 
    // check if the app is running in the local environment, and if so return the mock data
    if (window.location.href.startsWith('http://localhost')) {
-      return Array.isArray(mockData) ? mockData : [];
+      return Array.isArray(mockData) ? mockData : [];    // return the mock data if it is an array, otherwise return an empty array
    }
 
    // get the access token
@@ -50,15 +50,12 @@ export const getEvents = async () => {
 
    // if the token is valid, fetch the list of events from the API
    if (token) {
-      removeQuery();
-      console.log('Token in getEvents function api.js:', token);
+      removeQuery();      // remove the query from the URL, 
       const url = "https://j1afvdafm1.execute-api.us-east-2.amazonaws.com/dev/api/get-events" + "/" + token;
       try {
          const response = await fetch(url);
          const result = await response.json();
-         console.log('Result in getEvents function api.js:', result);
-         console.log('Result.events in getEvents function api.js:', result.events);
-         return Array.isArray(result) ? result : [];  // return the list of events if the result is an array
+         return Array.isArray(result) ? result : [];  // return the list of events if the result is an array, otherwise return an empty array
       } catch (error) {
          console.error('Error fetching events:', error);  // log an error if there is an error fetching the events
       }
@@ -75,7 +72,6 @@ const getToken = async (code) => {
    const { access_token } = await response.json();           // get the access token from the response
    access_token && localStorage.setItem("access_token", access_token);   // store the access token in local storage
 
-   console.log('Access Token in getToken function api.js:', access_token);
    return access_token;                                           // return the access token
 };
 
