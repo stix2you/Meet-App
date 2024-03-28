@@ -50,6 +50,7 @@ export const getEvents = async () => {
    // if the token is valid, fetch the list of events from the API
    if (token) {
       removeQuery();
+      console.log('Token in getEvents function api.js:', token);
       const url = "https://j1afvdafm1.execute-api.us-east-2.amazonaws.com/dev/api/get-events" + "/" + token;
       try {
          const response = await fetch(url);
@@ -62,6 +63,7 @@ export const getEvents = async () => {
    return []; // Ensure function always returns an array
 };
 
+// This function will get the token from the API
 const getToken = async (code) => {
    const encodeCode = encodeURIComponent(code);
    const response = await fetch(
@@ -70,7 +72,7 @@ const getToken = async (code) => {
    const { access_token } = await response.json();
    access_token && localStorage.setItem("access_token", access_token);
 
-      console.log('Access Token:', access_token);
+      console.log('Access Token in getToken function api.js:', access_token);
    return access_token;
 };
 
