@@ -58,38 +58,39 @@ export const getEvents = async () => {
       } catch (error) {
          console.error('Error fetching events:', error);  // log an error if there is an error fetching the events
       }
-      return []; // Ensure function always returns an array
-   };
+   }
+   return []; // Ensure function always returns an array
+};
 
-   const getToken = async (code) => {
-      const encodeCode = encodeURIComponent(code);
-      const response = await fetch(
-         'https://j1afvdafm1.execute-api.us-east-2.amazonaws.com/dev/api/token' + '/' + encodeCode
-      );
-      const { access_token } = await response.json();
-      access_token && localStorage.setItem("access_token", access_token);
+const getToken = async (code) => {
+   const encodeCode = encodeURIComponent(code);
+   const response = await fetch(
+      'https://j1afvdafm1.execute-api.us-east-2.amazonaws.com/dev/api/token' + '/' + encodeCode
+   );
+   const { access_token } = await response.json();
+   access_token && localStorage.setItem("access_token", access_token);
 
-      return access_token;
-   };
+   return access_token;
+};
 
-   // This function will get the list of events from the API
-   export const getAccessToken = async () => {
-      const accessToken = localStorage.getItem('access_token');   // get the access token from local storage
-      const tokenCheck = accessToken && (await checkToken(accessToken));   // check if the token is valid
+// This function will get the list of events from the API
+export const getAccessToken = async () => {
+   const accessToken = localStorage.getItem('access_token');   // get the access token from local storage
+   const tokenCheck = accessToken && (await checkToken(accessToken));   // check if the token is valid
 
-      if (!accessToken || tokenCheck.error) {
-         await localStorage.removeItem("access_token");
-         const searchParams = new URLSearchParams(window.location.search);
-         const code = await searchParams.get("code");
-         if (!code) {
-            const response = await fetch(
-               "https://j1afvdafm1.execute-api.us-east-2.amazonaws.com/dev/api/get-auth-url"
-            );
-            const result = await response.json();
-            const { authUrl } = result;
-            return (window.location.href = authUrl);
-         }
-         return code && getToken(code);
+   if (!accessToken || tokenCheck.error) {
+      await localStorage.removeItem("access_token");
+      const searchParams = new URLSearchParams(window.location.search);
+      const code = await searchParams.get("code");
+      if (!code) {
+         const response = await fetch(
+            "https://j1afvdafm1.execute-api.us-east-2.amazonaws.com/dev/api/get-auth-url"
+         );
+         const result = await response.json();
+         const { authUrl } = result;
+         return (window.location.href = authUrl);
       }
-      return accessToken;
-   };
+      return code && getToken(code);
+   }
+   return accessToken;
+};
