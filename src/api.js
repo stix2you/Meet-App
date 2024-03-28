@@ -13,12 +13,13 @@ export const extractLocations = (events) => {
    return locations;
 };
 
-const checkToken = async (accessToken) => {
-   const response = await fetch(
+// This function will check if the token is valid
+const checkToken = async (accessToken) => {    
+   const response = await fetch(                    // send a request to the API to check if the token is valid
       `https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=${accessToken}`
    );
-   const result = await response.json();
-   return result;
+   const result = await response.json();            // get the result from the response
+   return result;                                  // return the result
 };
 
 const removeQuery = () => {
@@ -55,6 +56,7 @@ export const getEvents = async () => {
       try {
          const response = await fetch(url);
          const result = await response.json();
+         console.log('Result in getEvents function api.js:', result);
          return Array.isArray(result.events) ? result.events : [];  // return the list of events if the result is an array
       } catch (error) {
          console.error('Error fetching events:', error);  // log an error if there is an error fetching the events
@@ -63,17 +65,17 @@ export const getEvents = async () => {
    return []; // Ensure function always returns an array
 };
 
-// This function will get the token from the API
+// This function will get the token from the API, store it in local storage, and return it, should only be called if there is no token in local storage
 const getToken = async (code) => {
-   const encodeCode = encodeURIComponent(code);
-   const response = await fetch(
+   const encodeCode = encodeURIComponent(code);  // encode the code before sending it to the API
+   const response = await fetch(                // send a request to the API to get the token
       'https://j1afvdafm1.execute-api.us-east-2.amazonaws.com/dev/api/token' + '/' + encodeCode
    );
-   const { access_token } = await response.json();
-   access_token && localStorage.setItem("access_token", access_token);
+   const { access_token } = await response.json();           // get the access token from the response
+   access_token && localStorage.setItem("access_token", access_token);   // store the access token in local storage
 
-      console.log('Access Token in getToken function api.js:', access_token);
-   return access_token;
+   console.log('Access Token in getToken function api.js:', access_token);
+   return access_token;                                           // return the access token
 };
 
 // This function will get the list of events from the API
@@ -81,19 +83,20 @@ export const getAccessToken = async () => {
    const accessToken = localStorage.getItem('access_token');   // get the access token from local storage
    const tokenCheck = accessToken && (await checkToken(accessToken));   // check if the token is valid
 
+   // if there is no access token in local storage OR the token is invalid, get the token from the API
    if (!accessToken || tokenCheck.error) {
-      await localStorage.removeItem("access_token");
-      const searchParams = new URLSearchParams(window.location.search);
-      const code = await searchParams.get("code");
-      if (!code) {
-         const response = await fetch(
+      await localStorage.removeItem("access_token");                     // remove the token from local storage
+      const searchParams = new URLSearchParams(window.location.search);  // get the search parameters from the URL (this is the code from the API)
+      const code = await searchParams.get("code");                       // get the code from the search parameters
+      if (!code) {                                                       // if there is no code, get the code from the API   
+         const response = await fetch(                                   // send a request to the API to get the authentication URL
             "https://j1afvdafm1.execute-api.us-east-2.amazonaws.com/dev/api/get-auth-url"
          );
-         const result = await response.json();
-         const { authUrl } = result;
-         return (window.location.href = authUrl);
+         const result = await response.json();                           // get the result from the response
+         const { authUrl } = result;                                     // get the authentication URL from the result
+         return (window.location.href = authUrl);                        // redirect the user to the authentication URL
       }
-      return code && getToken(code);
+      return code && getToken(code);                                  // getToken is only called if there wasn't a token in local storage
    }
    return accessToken;
 };
