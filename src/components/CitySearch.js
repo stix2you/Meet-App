@@ -1,10 +1,18 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-const CitySearch = ({ allLocations }) => {
+const CitySearch = ({ allLocations, setCurrentCity }) => {
    const [showSuggestions, setShowSuggestions] = useState(false);
    const [query, setQuery] = useState("");
    const [suggestions, setSuggestions] = useState([]);
 
+   // update the suggestions state with the allLocations prop passed from the App component
+   useEffect(() => {
+      setSuggestions(allLocations);
+    }, [`${allLocations}`]);   
+    // stringify the allLocations prop to disentangle the complex data type of allLocations from the memory address,
+    // this avoids infinite loop
+
+   // filter the locations based on the user input
    const handleInputChanged = (event) => {
       const value = event.target.value;
       const filteredLocations = allLocations ? allLocations.filter((location) => {
@@ -15,12 +23,15 @@ const CitySearch = ({ allLocations }) => {
       setSuggestions(filteredLocations);
    };
 
+   // set the query state to the value of the clicked item and hide the suggestions list
    const handleItemClicked = (event) => {
-      const value = event.target.textContent;
-      setQuery(value);
+      const value = event.target.textContent;  // get the text content of the clicked item
+      setQuery(value);                         // set the query state to the value of the clicked item
       setShowSuggestions(false); // to hide the list
+      setCurrentCity(value); // set the currentCity state to the value of the clicked item
    };
 
+   // this UI component renders a text input field and a list of suggestions
    return (
       <div id="city-search">
          <input
