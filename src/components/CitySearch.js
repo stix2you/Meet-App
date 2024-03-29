@@ -41,6 +41,7 @@ const CitySearch = ({ allLocations, setCurrentCity }) => {
             value={query}
             onFocus={() => setShowSuggestions(true)}
             onChange={handleInputChanged}
+            data-testid="city-input"
          />
          {showSuggestions ?
             <ul className="suggestions">

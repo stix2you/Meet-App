@@ -18,7 +18,7 @@ function App() {
 
    // Initialize the allLocations state with the list of locations from the events list:
    const fetchData = async () => {
-      try {
+    
       const allEvents = await getEvents();
       const filteredEvents = currentCity === "See all cities" ?
         allEvents :
@@ -26,9 +26,7 @@ function App() {
       
       setEvents(filteredEvents.slice(0, currentNOE));   // set the events state to the list of events
       setAllLocations(extractLocations(allEvents));
-      } catch (error) {
-         console.error('Error fetching data:', error);
-      }
+      
     }
 
    // return the App component with the CitySearch, NumberOfEvents, and EventList components
