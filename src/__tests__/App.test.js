@@ -57,18 +57,20 @@ describe('<App /> integration', () => {
        });
    });
 
+   // Test that the component renders a list of events matching the number of events selected by the user
    test('selected number of events by the user are rendered', async () => {
+      const user = userEvent.setup();
       const AppComponent = render(<App />);
       const AppDOM = AppComponent.container.firstChild;
+  
       const NumberOfEventsDOM = AppDOM.querySelector('#number-of-events');
-      const NumberOfEventsInput =
-         within(NumberOfEventsDOM).queryByRole('textbox');
-
-      await userEvent.type(NumberOfEventsInput, '{backspace}{backspace}10');
-
+      const NumberOfEventsInput = within(NumberOfEventsDOM).queryByRole('textbox');
+  
+      await user.type(NumberOfEventsInput, "{backspace}{backspace}10");
+  
       const EventListDOM = AppDOM.querySelector('#event-list');
       const allRenderedEventItems = within(EventListDOM).queryAllByRole('listitem');
-      expect(allRenderedEventItems.length).toEqual(10);
-
-   })
+  
+      expect(allRenderedEventItems.length).toBe(10);
+    });
 });
