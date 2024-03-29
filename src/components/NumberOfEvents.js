@@ -1,27 +1,21 @@
-import React, { Component } from 'react';
+const NumberOfEvents = ({ setCurrentNOE, currentNOE }) => {  // Create a new component called NumberOfEvents
 
-class NumberOfEvents extends Component {
-   state = {
-      numberOfEvents: 32,
-   };
-
-   handleInputChange = (event) => {
-      const value = event.target.value;
-      this.setState({ numberOfEvents: value });
+   const handleInputChange = (event) => {
+      const value = event.target.value;           // get the value of the input field and assign to 'value'
+      setCurrentNOE(value);   // set the set currentNOE to value entered in the input field
    }
 
-   render() {
-      return (
-         <div id="number-of-events">
-            <input
-               type="text"
-               className="number-of-events"
-               value={this.state.numberOfEvents}
-               onChange={this.handleInputChange}
-            />
-         </div>
-      );
-   }
+   return (
+      <div id="number-of-events">
+         <input
+            type="text"
+            defaultValue="32"
+            className="number-of-events"
+            onChange={handleInputChange}
+            data-testid="number-of-events-input"
+         />
+      </div>
+   );
 }
 
 export default NumberOfEvents;

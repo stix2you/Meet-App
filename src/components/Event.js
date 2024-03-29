@@ -1,5 +1,6 @@
 import { useState } from 'react';
 
+// this component renders an event with a title, date, location, and description
 const Event = ({ event }) => {
 
    const [showDetails, setShowDetails] = useState(false);  // this used to show or hide the event details

@@ -11,6 +11,11 @@ function App() {
    const [allLocations, setAllLocations] = useState([]);  // Declare a state for allLocations
    const [currentCity, setCurrentCity] = useState("See all cities");
 
+   // Fetch the list of events when the component mounts
+   useEffect(() => { 
+      fetchData();
+   }, [currentCity, currentNOE]); // callback of useEffect will be called whenever it detects a change in currentCity
+
    // Initialize the allLocations state with the list of locations from the events list:
    const fetchData = async () => {
       try {
@@ -26,18 +31,13 @@ function App() {
       }
     }
 
-   // Fetch the list of events when the component mounts
-   useEffect(() => { 
-      fetchData();
-   }, [currentCity]); // callback of useEffect will be called whenever it detects a change in currentCity
-
    // return the App component with the CitySearch, NumberOfEvents, and EventList components
    // Pass the allLocations state to the CitySearch component
    // Pass the events state to the EventList component
    return (
       <div className="App">
          <CitySearch allLocations={allLocations} setCurrentCity={setCurrentCity} />
-         <NumberOfEvents />
+         <NumberOfEvents currentNOE={currentNOE} setCurrentNOE={setCurrentNOE} />
          <EventList events={events}/>
       </div>
    );

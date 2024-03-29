@@ -1,10 +1,10 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import NumberOfEvents from '../components/NumberOfEvents';
 import userEvent from '@testing-library/user-event';
 
-describe('<NumberOfEvents />', () => {
+describe('<NumberOfEvents /> component', () => {
 
    beforeEach(() => {
       render(<NumberOfEvents />);
@@ -21,10 +21,17 @@ describe('<NumberOfEvents />', () => {
       const inputElement = screen.getByRole('textbox');
       expect(inputElement.value).toBe('32');
    });
+});
 
+describe('<NumberOfEvents /> integration', () => {
    // test that the value of the textbox changes when a user types in it
    test('value of the textbox changes when a user types in it', async () => {
-      const inputElement = screen.getByRole('textbox');   // screen is a global object provided by the testing library
+      // Create a mock function to pass as a prop to the NumberOfEvents component
+      const setCurrentNOE = jest.fn();                             
+      render(<NumberOfEvents setCurrentNOE={setCurrentNOE} />);
+
+      const inputElements = screen.getAllByTestId('number-of-events-input');   // screen is a global object provided by the testing library
+      const inputElement = inputElements[0]; // Target the first input element
       await userEvent.type(inputElement, '{backspace}{backspace}10');  // simulate clear the input field and type '10'
       expect(inputElement.value).toBe('10');
     });
