@@ -1,4 +1,16 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:500);
+:root {
+  background-color: #eeeeee;
+}
+
+body {
+   background-image: url('../images/city_bkgd.webp');
+   background-size: cover;
+   background-position: top center;
+   background-repeat: no-repeat;
+   background-attachment: fixed;
+ }
+
 .App {
   text-align: center;
   padding: 2% 5%;
@@ -20,7 +32,7 @@ p {
 input[type="text"],
 input[type="number"] {
   padding: 8px 6px 8px 10px;
-  border-radius: 4px;
+  border-radius: 8px;
   outline: none;
   border: 1px solid #ccc;
   font-size: 14px;
@@ -29,6 +41,10 @@ input[type="number"] {
   height: 38px;
   margin-bottom: 20px;
 }
+
+.number-of-events {
+  width: 50px;
+}  
 
 .city {
   width: 250px;
@@ -69,20 +85,35 @@ input[type="number"] {
 }
 
 .event {
-  padding: 10px 10px 35px;
-  margin-bottom: 10px;
-  text-align: left;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  position: relative;
-}
-
+   padding: 10px 10px 35px;
+   margin-bottom: 10px;
+   text-align: center;
+   border: 1px solid #ccc;
+   border-radius: 12px;
+   background-color: rgba(255, 255, 255, 0.8);
+   width: auto;  
+  display: inline-block; /* Makes the element block-level */
+   margin-left: auto; /* These two margin properties */
+   margin-right: auto; /* center the block horizontally */
+   box-sizing: border-box;
+ }
+ 
 .details-btn {
-  position: absolute;
-  right: 5px;
-  bottom: 5px;
-  padding: 5px 8px;
-  border-radius: 4px;
-  outline: none;
-  cursor: pointer;
-}
+   position: center;
+   right: 5px;
+   bottom: 5px;
+   padding: 12px 20px; /* Increased padding for a larger button */
+   border-radius: 8px; /* Slightly larger radius for aesthetic balance */
+   outline: none;
+   cursor: pointer;
+   font-size: 18px; /* Larger font size for the button text */
+   background-color: #0c0c5c; /* Example background color */
+   color: white; /* Text color */
+   border: none; /* Removing the border for a modern look, if desired */
+   transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+ }
+ 
+ .details-btn:hover {
+   background-color: #121695; /* Darker shade on hover for visual feedback */
+ }
+ 

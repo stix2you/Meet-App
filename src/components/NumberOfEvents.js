@@ -7,6 +7,7 @@ const NumberOfEvents = ({ setCurrentNOE, currentNOE }) => {  // Create a new com
 
    return (
       <div id="number-of-events">
+         <label>Number of Events to Display: </label>
          <input
             type="text"
             defaultValue="32"

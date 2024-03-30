@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import CitySearch from './components/CitySearch';
 import EventList from './components/EventList';
 import NumberOfEvents from './components/NumberOfEvents';
-import { extractLocations, getEvents} from './api';
+import { extractLocations, getEvents } from './api';
 import './App.css';
 
 function App() {
@@ -12,31 +12,32 @@ function App() {
    const [currentCity, setCurrentCity] = useState("See all cities");
 
    // Fetch the list of events when the component mounts
-   useEffect(() => { 
+   useEffect(() => {
       fetchData();
    }, [currentCity, currentNOE]); // callback of useEffect will be called whenever it detects a change in currentCity
 
    // Initialize the allLocations state with the list of locations from the events list:
    const fetchData = async () => {
-    
+
       const allEvents = await getEvents();
       const filteredEvents = currentCity === "See all cities" ?
-        allEvents :
-        allEvents.filter(event => event.location === currentCity)
-      
+         allEvents :
+         allEvents.filter(event => event.location === currentCity)
+
       setEvents(filteredEvents.slice(0, currentNOE));   // set the events state to the list of events
       setAllLocations(extractLocations(allEvents));
-      
-    }
+
+   }
 
    // return the App component with the CitySearch, NumberOfEvents, and EventList components
    // Pass the allLocations state to the CitySearch component
    // Pass the events state to the EventList component
    return (
       <div className="App">
+         <h1>The Meet App</h1>
          <CitySearch allLocations={allLocations} setCurrentCity={setCurrentCity} />
          <NumberOfEvents currentNOE={currentNOE} setCurrentNOE={setCurrentNOE} />
-         <EventList events={events}/>
+         <EventList events={events} />
       </div>
    );
 }
