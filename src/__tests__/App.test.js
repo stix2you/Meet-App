@@ -54,7 +54,7 @@ describe('<App /> integration', () => {
       // Check that each rendered event contain the text "Berlin, Germany"
       allRenderedEventItems.forEach(event => {
          expect(event.textContent).toContain("Berlin, Germany");
-       });
+      });
    });
 
    // Test that the component renders a list of events matching the number of events selected by the user
@@ -62,15 +62,15 @@ describe('<App /> integration', () => {
       const user = userEvent.setup();
       const AppComponent = render(<App />);
       const AppDOM = AppComponent.container.firstChild;
-  
+
       const NumberOfEventsDOM = AppDOM.querySelector('#number-of-events');
       const NumberOfEventsInput = within(NumberOfEventsDOM).queryByRole('textbox');
-  
+
       await user.type(NumberOfEventsInput, "{backspace}{backspace}10");
-  
+
       const EventListDOM = AppDOM.querySelector('#event-list');
       const allRenderedEventItems = within(EventListDOM).queryAllByRole('listitem');
-  
+
       expect(allRenderedEventItems.length).toBe(10);
-    });
+   });
 });

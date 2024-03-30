@@ -8,9 +8,9 @@ const CitySearch = ({ allLocations, setCurrentCity }) => {
    // update the suggestions state with the allLocations prop passed from the App component
    useEffect(() => {
       setSuggestions(allLocations);
-    }, [`${allLocations}`]);   
-    // stringify the allLocations prop to disentangle the complex data type of allLocations from the memory address,
-    // this avoids infinite loop
+   }, [`${allLocations}`]);
+   // stringify the allLocations prop to disentangle the complex data type of allLocations from the memory address,
+   // this avoids infinite loop
 
    // filter the locations based on the user input
    const handleInputChanged = (event) => {

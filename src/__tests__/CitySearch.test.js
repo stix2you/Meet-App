@@ -8,7 +8,7 @@ describe('<CitySearch /> component', () => {
    let CitySearchComponent;
 
    beforeEach(() => {
-      CitySearchComponent = render(<CitySearch allLocations={[]}/>);  // dummy prop passed to the CitySearch component
+      CitySearchComponent = render(<CitySearch allLocations={[]} />);  // dummy prop passed to the CitySearch component
    });
 
    test('renders text input', () => {
@@ -61,7 +61,7 @@ describe('<CitySearch /> component', () => {
       const user = userEvent.setup();
       const allEvents = await getEvents();
       const allLocations = extractLocations(allEvents);
-      CitySearchComponent.rerender(<CitySearch 
+      CitySearchComponent.rerender(<CitySearch
          allLocations={allLocations}
          setCurrentCity={() => { }} />);
 
@@ -81,18 +81,18 @@ describe('<CitySearch /> component', () => {
       const allEvents = await getEvents();
       const allLocations = extractLocations(allEvents);
       CitySearchComponent.rerender(<CitySearch allLocations={allLocations} />);
-    
+
       // Simulate user typing "Paris, France" in the city textbox
       const cityTextBox = CitySearchComponent.queryByRole('textbox');
       await user.type(cityTextBox, "XXX, XXX");
-    
+
       // Get all <li> elements inside the suggestion list
       const suggestionListItems = CitySearchComponent.queryAllByRole('listitem');
-      
+
       // Expect the suggestion list to have only one item ("See all cities")
       expect(suggestionListItems).toHaveLength(1);
       expect(suggestionListItems[0]).toHaveTextContent('See all cities');
-    });
+   });
 });
 
 describe('<CitySearch /> integration', () => {
@@ -108,7 +108,7 @@ describe('<CitySearch /> integration', () => {
       const allEvents = await getEvents();
       const allLocations = extractLocations(allEvents);
 
-      await waitFor(() => {      
+      await waitFor(() => {
          const suggestionListItems = within(CitySearchDOM).queryAllByRole('listitem');
          expect(suggestionListItems.length).toBe(allLocations.length + 1);
       });

@@ -14,7 +14,7 @@ describe('<Event /> component', () => {
       EventComponent = render(<Event event={firstEvent} />); // Render the Event component with the first event
    });
 
-      // Tests that the Event component renders the event title
+   // Tests that the Event component renders the event title
    test('renders event title', () => {
       expect(EventComponent.queryByText(firstEvent.summary)).toBeInTheDocument(); // Check that the DOM element contains the event title
    });
@@ -22,7 +22,7 @@ describe('<Event /> component', () => {
    // Tests that the Event component renders the event start time
    test('renders event start time', async () => {
       expect(EventComponent.queryByText(firstEvent.created)).toBeInTheDocument();
-    });
+   });
 
    // Tests that the Event component renders the event location
    test('renders event location', () => {
