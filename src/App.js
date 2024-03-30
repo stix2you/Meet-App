@@ -26,7 +26,6 @@ function App() {
 
       setEvents(filteredEvents.slice(0, currentNOE));   // set the events state to the list of events
       setAllLocations(extractLocations(allEvents));
-
    }
 
    // return the App component with the CitySearch, NumberOfEvents, and EventList components
