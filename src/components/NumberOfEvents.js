@@ -1,4 +1,5 @@
-const NumberOfEvents = ({ setCurrentNOE, currentNOE }) => {  // Create a new component called NumberOfEvents
+// this component will allow the user to set the number of events to display on the page
+const NumberOfEvents = ({ setCurrentNOE }) => {  
 
    const handleInputChange = (event) => {
       const value = event.target.value;           // get the value of the input field and assign to 'value'

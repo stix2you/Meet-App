@@ -5,19 +5,21 @@ import NumberOfEvents from './components/NumberOfEvents';
 import { extractLocations, getEvents } from './api';
 import './App.css';
 
+// App component is the parent component that renders the CitySearch, NumberOfEvents, and EventList components
 function App() {
-   const [events, setEvents] = useState([]);
-   const [currentNOE, setCurrentNOE] = useState(32);
-   const [allLocations, setAllLocations] = useState([]);  // Declare a state for allLocations
-   const [currentCity, setCurrentCity] = useState("See all cities");
-   const [isLoading, setIsLoading] = useState(true);
+   const [events, setEvents] = useState([]);            // 'events' holds the list of events
+   const [currentNOE, setCurrentNOE] = useState(32);     // 'currentNOE' holds the number of events to display
+   const [allLocations, setAllLocations] = useState([]);  // 'allLocations' holds the list of all locations
+   const [currentCity, setCurrentCity] = useState("See all cities");      // 'currentCity' holds the currently selected city
+   const [isLoading, setIsLoading] = useState(true);                     // 'isLoading' is flag to indicate if the data is currently being fetched
 
-   // Fetch the list of events when the component mounts
+   // useeffect hook to fetch the list of events and set the events state when the component mounts, 
+   // AND conditionally rerender the component when the currentCity or currentNOE state changes
    useEffect(() => {
       fetchData();
-   }, [currentCity, currentNOE]); // callback of useEffect will be called whenever it detects a change in currentCity
+   }, [currentCity, currentNOE]); // callback of useEffect will be called whenever it detects a change in currentCity or currentNOE
 
-   // Initialize the allLocations state with the list of locations from the events list:
+   // Fetch the list of events, filter the events based on the currentCity, set "isLoading" to "true" before fetching the data and "false" after fetching the data
    const fetchData = async () => {
       setIsLoading(true);
 

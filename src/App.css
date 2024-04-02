@@ -1,5 +1,6 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:500);
 
+/* global styles */
 :root {
    background-color: #eeeeee;
 }
@@ -36,6 +37,7 @@ p {
    margin: 5px 0;
 }
 
+/* Styling for the input boxes */
 input[type="text"],
 input[type="number"] {
    padding: 8px 6px 8px 10px;
@@ -53,6 +55,7 @@ input[type="number"] {
    width: 50px;
 }
 
+/* Styling for the city input */
 .city {
    width: 250px;
 }
@@ -64,6 +67,7 @@ input[type="number"] {
    position: relative;
 }
 
+/* Styling for the suggestions list */
 .suggestions {
    width: 250px;
    position: absolute;
@@ -91,6 +95,7 @@ input[type="number"] {
    background-color: #bcdcdb;
 }
 
+/* Styling for the event list */
 .event-list {
    display: flex;
    flex-wrap: wrap;
@@ -98,6 +103,7 @@ input[type="number"] {
    gap: 10px;
 }
 
+/* Styling for each event */
 .event {
    padding: 10px 10px 35px;
    margin-bottom: 10px;
@@ -109,6 +115,7 @@ input[type="number"] {
    width: 400px;
 }
 
+/* Styling for show-details button */
 .details-btn {
    position: center;
    right: 5px;
@@ -128,6 +135,7 @@ input[type="number"] {
    background-color: #121695;
 }
 
+/* Styling for loading message */
 .loading-message {
    text-align: center;
  }

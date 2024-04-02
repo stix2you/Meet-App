@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 
+// this component renders a text input field for city selection and a list of suggestions
 const CitySearch = ({ allLocations, setCurrentCity }) => {
    const [showSuggestions, setShowSuggestions] = useState(false);
    const [query, setQuery] = useState("");
