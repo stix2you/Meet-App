@@ -4,21 +4,27 @@
    background-color: #eeeeee;
 }
 
-body {
+html, body {
+   height: 100%;
+   margin: 0;
+   padding: 0;
+}
+
+.App * {
+   box-sizing: border-box;
+} 
+
+.App {
+   text-align: center;
+   overflow: hidden;
+   padding: 2% 5%;
+   min-height: 100vh; 
    background-image: url('../images/city_bkgd.webp');
    background-size: cover;
    background-position: top center;
    background-repeat: no-repeat;
    background-attachment: fixed;
-}
-
-.App {
-   text-align: center;
-   padding: 2% 5%;
-}
-
-.App * {
-   box-sizing: border-box;
+   background-size: cover; 
 }
 
 ul {
@@ -85,18 +91,22 @@ input[type="number"] {
    background-color: #bcdcdb;
 }
 
+.event-list {
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: center;
+   gap: 10px;
+}
+
 .event {
    padding: 10px 10px 35px;
    margin-bottom: 10px;
    text-align: center;
    border: 1px solid #ccc;
-   border-radius: 12px;
+   border-radius: 20px;
    background-color: rgba(255, 255, 255, 0.9);
-   width: auto;
-   display: inline-block;
-   margin-left: auto;
-   margin-right: auto;
    box-sizing: border-box;
+   width: 400px;
 }
 
 .details-btn {
