@@ -41,7 +41,10 @@ function App() {
          <CitySearch allLocations={allLocations} setCurrentCity={setCurrentCity} />
          <NumberOfEvents currentNOE={currentNOE} setCurrentNOE={setCurrentNOE} />
          {isLoading ? (
-            <div>Loading events...</div>  // Placeholder for your loading indicator
+            <div className="loading-message">
+               Loading events
+               <div className="loading-dots"><span>.</span><span>.</span><span>.</span></div>
+            </div>
          ) : (
             <EventList events={events} />
          )}
