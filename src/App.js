@@ -10,6 +10,7 @@ function App() {
    const [currentNOE, setCurrentNOE] = useState(32);
    const [allLocations, setAllLocations] = useState([]);  // Declare a state for allLocations
    const [currentCity, setCurrentCity] = useState("See all cities");
+   const [isLoading, setIsLoading] = useState(true);
 
    // Fetch the list of events when the component mounts
    useEffect(() => {
@@ -36,7 +37,11 @@ function App() {
          <h1>The Meet App</h1>
          <CitySearch allLocations={allLocations} setCurrentCity={setCurrentCity} />
          <NumberOfEvents currentNOE={currentNOE} setCurrentNOE={setCurrentNOE} />
-         <EventList events={events} />
+         {isLoading ? (
+            <div>Loading events...</div>  // Placeholder for your loading indicator
+         ) : (
+            <EventList events={events} />
+         )}
       </div>
    );
 }
