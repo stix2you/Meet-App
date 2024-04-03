@@ -1,27 +1,29 @@
-import { render, within } from '@testing-library/react';
+import { render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { getEvents } from '../api';
 import App from '../App';
 
-describe('<App /> component', () => {  // Describe the component we are testing
-   let AppDOM;    // Declare a variable to store the DOM element
-   beforeEach(() => {    // Before each test, render the component and store the DOM element
-      AppDOM = render(<App />).container.firstChild;
-   })
-
+describe('<App /> component', () => {
+   
    // Test that the component renders a list of events
-   test('renders list of events', () => {    // Test that the component renders a list of events
-      expect(AppDOM.querySelector('#event-list')).toBeInTheDocument();    // Check that the DOM element contains an element with the ID 'event-list'
+   test('renders list of events', async () => {
+       render(<App />);
+       // Use waitFor to wait for the loading message to disappear and the event list to be in the document
+       await waitFor(() => {
+           expect(screen.getByTestId('event-list')).toBeInTheDocument();
+       });
    });
 
    // Test that the component renders a CitySearch component
    test('render CitySearch', () => {
-      expect(AppDOM.querySelector('#city-search')).toBeInTheDocument();
+       render(<App />);
+       expect(screen.getByTestId('city-search')).toBeInTheDocument();
    });
 
    // Test that the component renders a NumberOfEvents component
    test('render NumberOfEvents', () => {
-      expect(AppDOM.querySelector('#number-of-events')).toBeInTheDocument();
+       render(<App />);
+       expect(screen.getByTestId('number-of-events')).toBeInTheDocument();
    });
 });
 

@@ -5,7 +5,7 @@ const EventList = ({ events }) => {
 
    // if events is not null, map through the events and render an Event component for each event
    return (
-      <ul className="event-list">
+      <ul id="event-list" className="event-list" data-testid="event-list">
          {events ? events.map(event => (
             <li key={event.id}><Event event={event} /></li>
          )) : null}

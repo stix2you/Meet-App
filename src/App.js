@@ -45,7 +45,7 @@ function App() {
          {isLoading ? (
             <h2 className="loading-message">
                Loading events
-               <h2 className="loading-dots"><span>.</span><span>.</span><span>.</span></h2>
+               <div className="loading-dots"><span>.</span><span>.</span><span>.</span></div>
             </h2>
          ) : (
             <EventList events={events} />

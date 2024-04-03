@@ -34,7 +34,7 @@ const CitySearch = ({ allLocations, setCurrentCity }) => {
 
    // this UI component renders a text input field and a list of suggestions
    return (
-      <div id="city-search">
+      <div data-testid="city-search" id="city-search">
          <input
             type="text"
             className="city"

@@ -1,33 +1,36 @@
-import { render, within, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import EventList from '../components/EventList';
 import { getEvents } from '../api';
 import App from '../App';
 
 
 describe('<EventList /> component', () => {
-   let EventListComponent;
-   beforeEach(() => {
-      EventListComponent = render(<EventList />);
-   });
 
+   // Test that the component renders a list of events
    test('has an element with "list" role', () => {
-      expect(EventListComponent.queryByRole("list")).toBeInTheDocument();   // Check that the DOM element contains an element with the ROLE 'list'
-   });
+      // using mock data in this instance because we need to pass a prop to the EventList component, but cannot load async data in a test
+      const mockEvents = [{ id: '1', name: 'Event 1' }, { id: '2', name: 'Event 2' }];
+      render(<EventList events={mockEvents} />);
+      const listElement = screen.getByRole('list'); // This line replaces EventListComponent.queryByRole("list")
+      expect(listElement).toBeInTheDocument();
+    });
+
+   // Test that the component renders a list of events
    test('renders correct number of events', async () => {
       const allEvents = await getEvents();
-      EventListComponent.rerender(<EventList events={allEvents} />);
-      expect(EventListComponent.getAllByRole("listitem")).toHaveLength(allEvents.length);
+      render(<EventList events={allEvents} />);
+      const listItems = await screen.findAllByRole('listitem');
+      expect(listItems).toHaveLength(allEvents.length);
    });
 });
 
 describe('<EventList /> integration', () => {
+
+   // Test that the component renders a list of 32 events when the app is mounted and rendered
    test('renders a list of 32 events when the app is mounted and rendered', async () => {
-      const AppComponent = render(<App />);
-      const AppDOM = AppComponent.container.firstChild;
-      const EventListDOM = AppDOM.querySelector('#event-list');
+      render(<App />);
       await waitFor(() => {
-         const EventListItems = within(EventListDOM).queryAllByRole('listitem');
-         expect(EventListItems.length).toBe(32);
+         expect(screen.getAllByRole('listitem')).toHaveLength(32);
       });
    });
 });
