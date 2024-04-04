@@ -1,4 +1,4 @@
-import { render, within, waitFor } from '@testing-library/react';
+import { render, cleanup, within, waitFor } from '@testing-library/react';
 import { extractLocations, getEvents } from '../api';
 import userEvent from '@testing-library/user-event';
 import CitySearch from '../components/CitySearch';
@@ -9,6 +9,10 @@ describe('<CitySearch /> component', () => {
 
    beforeEach(() => {
       CitySearchComponent = render(<CitySearch allLocations={[]} />);  // dummy prop passed to the CitySearch component
+   });
+
+   afterEach(() => {
+      cleanup();   // clean up the DOM after each test to ensure that the tests are independent of each other
    });
 
    test('renders text input', () => {

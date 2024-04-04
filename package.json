@@ -54,12 +54,13 @@
    },
    "devDependencies": {
       "gh-pages": "^6.1.1",
-      "jest-cucumber": "^4.1.0"
+      "jest-cucumber": "^4.1.0",
+      "puppeteer": "^22.6.2"
    },
    "jest": {
       "collectCoverageFrom": [
          "src/**/*.js",
-         "!src/mock-data-from-google-and-cf.js",
+         "!src/api.js",
          "!src/reportWebVitals.js",
          "!src/serviceWorkerRegistration.js",
          "!src/service-worker.js",

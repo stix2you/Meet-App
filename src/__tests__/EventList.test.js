@@ -22,6 +22,13 @@ describe('<EventList /> component', () => {
       const listItems = await screen.findAllByRole('listitem');
       expect(listItems).toHaveLength(allEvents.length);
    });
+
+   test('does not render any events when the events prop is falsy', () => {
+      render(<EventList events={null} />); // You can also test with events={undefined} or events={[]}
+    
+      const listItems = screen.queryAllByRole('listitem');
+      expect(listItems).toHaveLength(0); // No list items should be rendered
+    });
 });
 
 describe('<EventList /> integration', () => {
