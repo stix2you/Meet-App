@@ -22,7 +22,7 @@ defineFeature(feature, test => {
       });
 
       then('the user should see the list of all upcoming events', async () => {
-         // I incorporated a loading indicator... so need to WAIT for the loading indicator to be removed from the DOM first 
+         // There is a loading indicator rendered while the API loads... so need to WAIT for the loading indicator to be removed from the DOM first 
          await waitFor(() => {
             expect(screen.queryByText(/loading events/i)).not.toBeInTheDocument();
          });

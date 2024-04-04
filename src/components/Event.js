@@ -12,7 +12,7 @@ const Event = ({ event }) => {
          <p className="event-location">{event && event.location}</p>
          <div>
             {/* Conditionally render details based on showDetails */}
-            {showDetails && (<p className="event-description">{event && event.description}</p>)}
+            {showDetails && (<p data-testid="event-description" className="event-description">{event && event.description}</p>)}
             {/* Button to toggle showDetails */}
             <button className="details-btn" onClick={() => setShowDetails(!showDetails)}>
                {showDetails ? 'Hide Details' : 'Show Details'}
