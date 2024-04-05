@@ -1,7 +1,7 @@
 Feature: Show hide an events details
    Scenario: An event element is collapsed by default.
-      Given any number of events have been displayed on the screen
-      When they are displayed
+      Given the user has just opened the app to the default view
+      When the initial list of events is displayed
       Then they should be displayed in a collapsed format for readability
 
    Scenario: User can expand an event to see details.

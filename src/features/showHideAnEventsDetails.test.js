@@ -1,6 +1,6 @@
 import { render, waitFor, screen, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { loadFeature, defineFeature } from 'jest-cucumber';
+import { loadFeature, defineFeature, findByClassName } from 'jest-cucumber';
 import App from '../App';
 import { getEvents } from '../api';
 import Event from '../components/Event';
@@ -11,164 +11,95 @@ const feature = loadFeature('./src/features/showHideAnEventsDetails.feature');
 defineFeature(feature, test => {
 
    test('An event element is collapsed by default.', ({ given, when, then }) => {
-      let EventComponent;
-      let firstEvent;
 
-      given('any number of events have been displayed on the screen', async () => {
-         const allEvents = await getEvents();
-         firstEvent = allEvents[0]; // Save the first event for use in all tests
-         EventComponent = render(<Event event={firstEvent} />); // Render the Event component with the first event
+      given('the user has just opened the app to the default view', async () => {
          render(<App />);
-         await waitFor(() => {
-            expect(screen.queryByText(/loading events/i)).not.toBeInTheDocument();
-         });
       });
 
-      when('they are displayed', async () => {
+      when('the initial list of events is displayed', async () => {
+         // Wait for the App to fetch events and update the UI, using disappearance of a loading text as an indicator
          await waitFor(() => {
             expect(screen.queryByText(/loading events/i)).not.toBeInTheDocument();
          });
+
+         // Confirm that at least one event is displayed by checking for the presence of event title test id
+         const eventTitles = await screen.findAllByTestId('event-title');
+         expect(eventTitles.length).toBeGreaterThan(0); // Check that there is at least one event title
       });
 
       then('they should be displayed in a collapsed format for readability', async () => {
-         const details = EventComponent.container.querySelector('.event-description');
-         expect(details).not.toBeInTheDocument();
+         const details = screen.queryAllByTestId('event-description');  // Get all the details sections
+         expect(details.length).toBe(0);  // Assuming details are only rendered when expanded, none should be present initially
       });
    });
 
-
-   // test('User can expand an event to see details.', ({ given, when, then }) => {
-   //    let EventComponent;
-   //    let firstEvent;
-
-   //    given('there is any list of collapsed events', async () => {
-   //       const allEvents = await getEvents();   // Fetch the list of events
-   //       firstEvent = allEvents[0]; // Save the first event for use in all tests
-   //       EventComponent = render(<Event event={firstEvent} />); // Render the Event component with the first event
-   //       render(<App />);
-   //       await waitFor(() => {
-   //          expect(screen.queryByText(/loading events/i)).not.toBeInTheDocument();
-   //       });
-   //    });
-
-   //    when('the user clicks on "show details" button', async () => {
-   //       const user = userEvent.setup();
-   //       const button = EventComponent.queryByText('Show Details');
-   //       await user.click(button);   // Simulate a user click on the button
-   //    });
-
-   //    then('the view of that event should change from a collapsed view to a detailed view', () => {
-   //       const details = EventComponent.container.querySelector('.event-description');   // Get the details section
-   //       expect(details).toBeInTheDocument();
-   //    });
-
-   // });
-
    test('User can expand an event to see details.', ({ given, when, then }) => {
-      given('there is any list of collapsed events', () => {
+      let firstEventDetailsButton;
 
+      given('there is any list of collapsed events', async () => {
+         render(<App />);  // Render the app to get the list of events
+
+         // Wait for the App to fetch events and update the UI, using disappearance of a loading text as an indicator
+         await waitFor(() => {
+            expect(screen.queryByText(/loading events/i)).not.toBeInTheDocument();
+         });
+
+         // Confirm that at least one event is displayed by checking for the presence of event title test id
+         const eventTitles = await screen.findAllByTestId('event-title');
+         expect(eventTitles.length).toBeGreaterThan(0); // Check that there is at least one event title
+
+         // assign the "Show Details" button for the first event to simulate click on it later
+         firstEventDetailsButton = screen.getAllByText('Show Details')[0];
       });
 
-      when(/^the user clicks on "(.*)" button$/, (arg0) => {
+      when('the user clicks on "show details" button', async () => {
+         // simulate user clicking on "Show Details" button for the first event
+         fireEvent.click(firstEventDetailsButton);
 
+         // wait for any asynchronous updates that occur as a result of the event expansion
+         await waitFor(() => {
+            expect(screen.queryByText(/Hide Details/i)).toBeInTheDocument();
+         });
       });
 
       then('the view of that event should change from a collapsed view to a detailed view', () => {
-
+         const details = screen.queryAllByTestId('event-description');  // Get the details section of the event the user clicked on
+         expect(details.length).toBeGreaterThan(0);  // Assuming details are only rendered when expanded, this should be greater than 0
       });
    });
 
    test('User can collapse an event to hide details.', ({ given, when, then }) => {
+      let firstEventDetailsButton;
 
-      given('an event view has been expanded', () => {
-
+      given('an event view has been expanded', async () => {
+         // the following is essentially the entire test for expanding an event and confirming the details are shown, to be done as a precondition for this test
+         render(<App />);
+         await waitFor(() => {
+            expect(screen.queryByText(/loading events/i)).not.toBeInTheDocument();
+         });
+         const eventTitles = await screen.findAllByTestId('event-title');
+         expect(eventTitles.length).toBeGreaterThan(0);
+         firstEventDetailsButton = screen.getAllByText('Show Details')[0];
+         fireEvent.click(firstEventDetailsButton);
+         await waitFor(() => {
+            expect(screen.queryByText(/Hide Details/i)).toBeInTheDocument();
+         });
+         then('the view of that event should change from a collapsed view to a detailed view', () => {
+            const details = screen.queryAllByTestId('event-description');
+            expect(details.length).toBeGreaterThan(0);
+         });
       });
 
       when('the user clicks on "hide details" button', () => {
-
+         firstEventDetailsButton = screen.getAllByText('Hide Details')[0];  // Get the "Hide Details" button for the first event
+         fireEvent.click(firstEventDetailsButton);    // simulate user clicking on "Hide Details" button for the first event
       });
 
-      then('the view of that event should change from an expanded view to a collapsed view', () => {
-
+      then('the view of that event should change from an expanded view to a collapsed view', async () => {
+         await waitFor(() => {
+            expect(screen.getAllByText('Show Details')[0]).toBeInTheDocument();  // Check that the "Show Details" button is back on the first event
+         });
       });
    });
 
 });
-
-
-
-// test('An event element is collapsed by default.', ({ given, when, then }) => {
-
-//    given('any number of events have been displayed on the screen', async () => {
-//       render(<App />);
-//       await waitFor(() => {
-//          expect(screen.queryByText(/loading events/i)).not.toBeInTheDocument();
-//       });
-//    });
-
-//    when('they are displayed', () => {
-//       // same condition as "given" section
-//    });
-
-//    then('they should be displayed in a collapsed format for readability', async () => {
-//       const eventDetailsButtons = await screen.findAllByRole('button', { name: 'Show Details' });
-//       expect(eventDetailsButtons.length).toBeGreaterThan(0); // Ensure there's at least one event.
-//       eventDetailsButtons.forEach(button => {
-//          expect(button.textContent).toBe('Show Details');
-//       });
-//    });
-// });
-
-// test('User can expand an event to see details.', async ({ given, when, then }) => {
-
-//    given('there is any list of collapsed events', async () => {
-//       render(<App />);
-//       await waitFor(() => {
-//          expect(screen.queryByText(/loading events/i)).not.toBeInTheDocument();
-//       });
-//    });
-
-//    when('the user clicks on "show details" button', async () => {
-//       const showDetailsButtons = await screen.findAllByRole('button', { name: 'Show Details' });
-//       fireEvent.click(showDetailsButtons[0]);
-//    });
-
-//    then('the view of that event should change from a collapsed view to a detailed view', async () => {
-//       const hideDetailsButton = await screen.findByText('Hide Details');
-//       expect(hideDetailsButton).toBeInTheDocument();
-//       const eventDescription = await screen.findByTestId('event-description'); // Ensure the Event component has data-testid="event-description" on the details div
-//       expect(eventDescription).toBeInTheDocument();
-//    });
-
-// });
-
-// test('User can collapse an event to hide details.', async ({ given, when, then }) => {
-//    let firstShowDetailsButton;
-
-//    given('an event view has been expanded', async () => {
-//       render(<App />);
-//       await waitFor(() => {
-//          expect(screen.queryByText(/loading events/i)).not.toBeInTheDocument();
-//       });
-//       const showDetailsButtons = await screen.findAllByRole('button', { name: 'Show Details' });
-//       firstShowDetailsButton = showDetailsButtons[0];
-//       fireEvent.click(firstShowDetailsButton); // Expand the first event
-//       await waitFor(() => {
-//          expect(screen.getByText('Hide Details')).toBeInTheDocument(); // Ensure the details have been shown
-//       });
-//    });
-
-//    when('the user clicks on "hide details" button', () => {
-//       const hideDetailsButton = screen.getByText('Hide Details'); // This assumes only one event has been expanded and thus only one Hide Details button exists
-//       fireEvent.click(hideDetailsButton);
-//    });
-
-//    then('the view of that event should change from an expanded view to a collapsed view', async () => {
-//       await waitFor(() => {
-//          expect(firstShowDetailsButton.textContent).toBe('Show Details'); // Check if the text reverted back to "Show Details"
-//       });
-
-//       // Alternatively, if you want to ensure the details are now hidden, and assuming the details have a unique identifier or role
-//       // expect(screen.queryByTestId('event-description')).not.toBeInTheDocument(); // This assumes the details have been hidden
-//    });
-// });
