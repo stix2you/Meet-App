@@ -3,11 +3,8 @@ import userEvent from '@testing-library/user-event';
 import { loadFeature, defineFeature } from 'jest-cucumber';
 import App from '../App';
 
-// loadFeature is a Jest function that loads the feature file that we want to test
 const feature = loadFeature('./src/features/specifyNumberOfEvents.feature');
 
-// defineFeature is a Jest function that defines the feature, feature is the feature file that we loaded, 
-// test is a Jest function that defines the test, and the test is the scenario that we loaded from the feature file
 defineFeature(feature, test => {
    
    test('When user hasn\'t specified a number, 32 is the default number of events', ({ given, when, then, and }) => {

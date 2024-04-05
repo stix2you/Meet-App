@@ -2,7 +2,6 @@ import { render, waitFor, screen, fireEvent } from '@testing-library/react';
 import { loadFeature, defineFeature } from 'jest-cucumber';
 import App from '../App';
 
-// loadFeature is a Jest function that loads the feature file that we want to test
 const feature = loadFeature('./src/features/showHideAnEventsDetails.feature');
 
 defineFeature(feature, test => {
