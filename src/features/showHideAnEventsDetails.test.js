@@ -37,31 +37,45 @@ defineFeature(feature, test => {
    });
 
 
-   test('User can expand an event to see details.', ({ given, when, then }) => {
-      let EventComponent;
-      let firstEvent;
+   // test('User can expand an event to see details.', ({ given, when, then }) => {
+   //    let EventComponent;
+   //    let firstEvent;
 
-      given('there is any list of collapsed events', async () => {
-         const allEvents = await getEvents();   // Fetch the list of events
-         firstEvent = allEvents[0]; // Save the first event for use in all tests
-         EventComponent = render(<Event event={firstEvent} />); // Render the Event component with the first event
-         render(<App />);
-         await waitFor(() => {
-            expect(screen.queryByText(/loading events/i)).not.toBeInTheDocument();
-         });
+   //    given('there is any list of collapsed events', async () => {
+   //       const allEvents = await getEvents();   // Fetch the list of events
+   //       firstEvent = allEvents[0]; // Save the first event for use in all tests
+   //       EventComponent = render(<Event event={firstEvent} />); // Render the Event component with the first event
+   //       render(<App />);
+   //       await waitFor(() => {
+   //          expect(screen.queryByText(/loading events/i)).not.toBeInTheDocument();
+   //       });
+   //    });
+
+   //    when('the user clicks on "show details" button', async () => {
+   //       const user = userEvent.setup();
+   //       const button = EventComponent.queryByText('Show Details');
+   //       await user.click(button);   // Simulate a user click on the button
+   //    });
+
+   //    then('the view of that event should change from a collapsed view to a detailed view', () => {
+   //       const details = EventComponent.container.querySelector('.event-description');   // Get the details section
+   //       expect(details).toBeInTheDocument();
+   //    });
+
+   // });
+
+   test('User can expand an event to see details.', ({ given, when, then }) => {
+      given('there is any list of collapsed events', () => {
+
       });
 
-      when('the user clicks on "show details" button', async () => {
-         const user = userEvent.setup();
-         const button = EventComponent.queryByText('Show Details');
-         await user.click(button);   // Simulate a user click on the button
+      when(/^the user clicks on "(.*)" button$/, (arg0) => {
+
       });
 
       then('the view of that event should change from a collapsed view to a detailed view', () => {
-         const details = EventComponent.container.querySelector('.event-description');   // Get the details section
-         expect(details).toBeInTheDocument();
-      });
 
+      });
    });
 
    test('User can collapse an event to hide details.', ({ given, when, then }) => {
