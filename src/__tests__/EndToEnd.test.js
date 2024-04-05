@@ -7,8 +7,8 @@ describe('show/hide event details', () => {
       browser = await puppeteer.launch({
          // **** Uncomment the following three lines to run the tests in a visible browser ****
          //    headless: false,
-         //    slowMo: 250, // slow down by 250ms,
-         //    timeout: 0 // removes any puppeteer/browser timeout limitations (this isn't the same as the timeout of jest)
+         //    slowMo: 50, // slow down by X number of ms,
+         //    timeout: 0 // removes any puppeteer/browser timeout limitations
       });
 
       page = await browser.newPage();
@@ -42,15 +42,11 @@ describe('Filter events by city', () => {
    let browser;
    let page;
 
-   async function clearInput(selector) {
-      await page.evaluate((sel) => { document.querySelector(sel).value = ''; }, selector);
-   }
-
    beforeAll(async () => {
       browser = await puppeteer.launch({
          // **** Uncomment the following three lines to run the tests in a visible browser ****
          headless: false,
-         slowMo: 250, // slow down by 250ms,
+         slowMo: 50, // slow down by X number of ms
          timeout: 0 // removes any puppeteer/browser timeout limitations (this isn't the same as the timeout of jest)
       });
 
@@ -62,30 +58,82 @@ describe('Filter events by city', () => {
       browser.close();
    });
 
+   // function to clear the input field between tests
+   async function clearInput(selector) {
+      await page.evaluate((sel) => { document.querySelector(sel).value = ''; }, selector);
+   }
+
    test('When user hasn’t searched for a city, show upcoming events from all cities.', async () => {
-      const events = await page.$$('.event'); // Assuming each event has a class .event
-      expect(events.length).toBeGreaterThan(0); // Check that events are displayed
+      const events = await page.$$('.event');   // this will return an array of all the events
+      expect(events.length).toBeGreaterThan(0); // check that events are displayed
    });
 
    test('User should see a list of suggestions when they search for a city.', async () => {
-      await clearInput('input.city'); // Clear the input field first
-      await page.type('input.city', 'Ber'); // Assuming the input for city search has a class .city-search
-      const suggestions = await page.$$('.suggestions > li'); // Assuming suggestions are listed within li elements under a .suggestions container
+      await clearInput('input.city'); // clear the input field first
+      await page.type('input.city', 'Ber'); // type 'Ber' to search for Berlin
+      const suggestions = await page.$$('.suggestions > li'); // check for the number of suggestions
       expect(suggestions.length).toBeGreaterThan(0);
    });
 
    test('User can select a city from the suggested list.', async () => {
-      await clearInput('input.city'); // Clear the input field first
-      await page.type('input.city', 'Berlin', { delay: 5 });
+      await clearInput('input.city'); // clear the input field first
+      await page.type('input.city', 'Berlin', { delay: 5 });   // type 'Berlin' to search for Berlin
 
-      await page.waitForSelector('.suggestions > li', { visible: true });
-      await page.click('.suggestions > li');
+      await page.waitForSelector('.suggestions > li', { visible: true });  // wait for the suggestions to be visible
+      await page.click('.suggestions > li');                               // click on the first suggestion      
 
-      const city = await page.$eval('input.city', el => el.value);
-      expect(city).toBe('Berlin, Germany');
+      const city = await page.$eval('input.city', el => el.value);   // get the value of the input field
+      expect(city).toBe('Berlin, Germany');                          // check that the value of the input field is 'Berlin, Germany' 
 
-      await page.waitForSelector('[data-testid="event"]', { visible: true });
-      const events = await page.$$('[data-testid="event"]');
-      expect(events.length).toBeGreaterThan(0);
+      await page.waitForSelector('[data-testid="event"]', { visible: true }); // wait for the events to be visible
+      const events = await page.$$('[data-testid="event"]');                  // get all the events
+      expect(events.length).toBeGreaterThan(0);                          // check that events are displayed
+   });
+});
+
+describe('Specify Number of Events', () => {
+   let browser;
+   let page;
+
+   beforeAll(async () => {
+      browser = await puppeteer.launch({
+         // **** Uncomment the following three lines to run the tests in a visible browser ****
+         headless: false, // Toggle this for visual debugging
+         slowMo: 50, // Slow down by X number of ms
+         timeout: 0 // Removes any puppeteer/browser timeout limitations
+      });
+
+      page = await browser.newPage();
+      await page.goto('http://localhost:3000/');
+   });
+
+   afterAll(() => {
+      browser.close();
+   });
+
+   // function to clear the input field between tests
+   async function clearInput(selector) {
+      await page.evaluate((sel) => { document.querySelector(sel).value = ''; }, selector);   // clear the input field
+      await page.evaluate((sel) => {                           // trigger change event to ensure React state updates correctly
+         const event = new Event('input', { bubbles: true });  // create a new input event
+         document.querySelector(sel).dispatchEvent(event);     // dispatch the event
+      }, selector);                                            // pass the selector to the function
+   }
+
+   test('When user hasn\'t specified a number, 32 is the default number of events', async () => {
+      const numberOfEventsInput = await page.$eval('input.number-of-events', el => el.value);  // get the value of the input field
+      expect(numberOfEventsInput).toBe('32');   // check that the default value is 32
+
+      const events = await page.$$('[data-testid="event"]');   // get all the events
+      expect(events.length).toBeLessThanOrEqual(32);  // check that the number of events is less than or equal to 32
+   });
+
+   test('User can change the number of events displayed', async () => {
+      await clearInput('input.number-of-events');  // clear the input field first
+      await page.type('input.number-of-events', '10', {delay: 50});  // type 10 in the input field
+
+      await page.waitForFunction('document.querySelectorAll("[data-testid=\'event\']").length === 10'); // wait for the number of events to be 10
+      const events = await page.$$('[data-testid="event"]');   // get all the events
+      expect(events.length).toBe(10);  // check that the number of events is 10
    });
 });
