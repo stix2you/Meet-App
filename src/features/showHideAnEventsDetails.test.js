@@ -1,9 +1,6 @@
 import { render, waitFor, screen, fireEvent } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import { loadFeature, defineFeature, findByClassName } from 'jest-cucumber';
+import { loadFeature, defineFeature } from 'jest-cucumber';
 import App from '../App';
-import { getEvents } from '../api';
-import Event from '../components/Event';
 
 // loadFeature is a Jest function that loads the feature file that we want to test
 const feature = loadFeature('./src/features/showHideAnEventsDetails.feature');
