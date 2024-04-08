@@ -47,7 +47,7 @@ describe('Filter events by city', () => {
          // **** Uncomment the following three lines to run the tests in a visible browser ****
          headless: false,
          slowMo: 50, // slow down by X number of ms
-         timeout: 0 // removes any puppeteer/browser timeout limitations (this isn't the same as the timeout of jest)
+         timeout: 0 // removes any puppeteer/browser timeout limitations
       });
 
       page = await browser.newPage();
@@ -100,7 +100,7 @@ describe('Specify Number of Events', () => {
          // **** Uncomment the following three lines to run the tests in a visible browser ****
          headless: false, // Toggle this for visual debugging
          slowMo: 50, // Slow down by X number of ms
-         timeout: 0 // Removes any puppeteer/browser timeout limitations
+         timeout: 0 // Removes any puppeteer/browser timeout limitations (this isn't the same as the timeout of jest, see below inside of tests)
       });
 
       page = await browser.newPage();
