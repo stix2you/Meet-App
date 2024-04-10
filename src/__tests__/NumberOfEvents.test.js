@@ -7,7 +7,7 @@ import userEvent from '@testing-library/user-event';
 describe('<NumberOfEvents /> component', () => {
 
    beforeEach(() => {
-      render(<NumberOfEvents />);
+      render(<NumberOfEvents setErrorAlert={() => { }} />);
    });
 
    // test that the component renders an input element of a textbox
@@ -28,7 +28,7 @@ describe('<NumberOfEvents /> integration', () => {
    test('value of the textbox changes when a user types in it', async () => {
       // Create a mock function to pass as a prop to the NumberOfEvents component
       const setCurrentNOE = jest.fn();
-      render(<NumberOfEvents setCurrentNOE={setCurrentNOE} />);
+      render(<NumberOfEvents setCurrentNOE={setCurrentNOE} setErrorAlert={() => { }} />);
 
       const inputElements = screen.getAllByTestId('number-of-events-input');   // screen is a global object provided by the testing library
       const inputElement = inputElements[0]; // Target the first input element
