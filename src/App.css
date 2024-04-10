@@ -159,3 +159,13 @@ input[type="number"] {
  .loading-dots span:nth-child(3) {
    animation-delay: 0.4s;
  }
+
+ /* Styling for the alerts container */
+ .alerts-container {
+   position: fixed;
+   top: 5%;    /* Center vertically */
+   left: 50%;   /* Center horizontally */
+   width: 250px;
+   transform: translate(-50%, -20%); /* Adjust position to true center */
+   z-index: 1000;
+}

@@ -8,7 +8,7 @@ describe('<CitySearch /> component', () => {
    let CitySearchComponent;
 
    beforeEach(() => {
-      CitySearchComponent = render(<CitySearch allLocations={[]} />);  // dummy prop passed to the CitySearch component
+      CitySearchComponent = render(<CitySearch allLocations={[]} setInfoAlert={() => { }} />);  // dummy props passed to the CitySearch component
    });
 
    afterEach(() => {
@@ -42,7 +42,7 @@ describe('<CitySearch /> component', () => {
       const user = userEvent.setup();
       const allEvents = await getEvents();
       const allLocations = extractLocations(allEvents);
-      CitySearchComponent.rerender(<CitySearch allLocations={allLocations} />);
+      CitySearchComponent.rerender(<CitySearch allLocations={allLocations} setInfoAlert={() => { }} />);
 
       // user types "Berlin" in city textbox
       const cityTextBox = CitySearchComponent.queryByRole('textbox');
@@ -67,7 +67,7 @@ describe('<CitySearch /> component', () => {
       const allLocations = extractLocations(allEvents);
       CitySearchComponent.rerender(<CitySearch
          allLocations={allLocations}
-         setCurrentCity={() => { }} />);
+         setCurrentCity={() => { }} setInfoAlert={() => { }} />);
 
       const cityTextBox = CitySearchComponent.queryByRole('textbox');   // get the textbox element from the DOM
       await user.type(cityTextBox, "Berlin");                           // simulate user typing "Berlin" in the textbox
@@ -84,7 +84,7 @@ describe('<CitySearch /> component', () => {
       const user = userEvent.setup();
       const allEvents = await getEvents();
       const allLocations = extractLocations(allEvents);
-      CitySearchComponent.rerender(<CitySearch allLocations={allLocations} />);
+      CitySearchComponent.rerender(<CitySearch allLocations={allLocations} setInfoAlert={() => { }} />);
 
       // Simulate user typing "Paris, France" in the city textbox
       const cityTextBox = CitySearchComponent.queryByRole('textbox');

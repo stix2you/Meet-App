@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 
 // this component renders a text input field for city selection and a list of suggestions
-const CitySearch = ({ allLocations, setCurrentCity }) => {
+const CitySearch = ({ allLocations, setCurrentCity, setInfoAlert }) => {
    const [showSuggestions, setShowSuggestions] = useState(false);
    const [query, setQuery] = useState("");
    const [suggestions, setSuggestions] = useState([]);
@@ -22,6 +22,15 @@ const CitySearch = ({ allLocations, setCurrentCity }) => {
 
       setQuery(value);
       setSuggestions(filteredLocations);
+
+      // add the info alert if the user input does not match any of the locations, added Apr10/2024
+      let infoText;
+      if (filteredLocations.length === 0) {
+         infoText = "We can not find the city you are looking for. Please try another city"
+      } else {
+         infoText = ""
+      }
+      setInfoAlert(infoText);
    };
 
    // set the query state to the value of the clicked item and hide the suggestions list
@@ -30,6 +39,7 @@ const CitySearch = ({ allLocations, setCurrentCity }) => {
       setQuery(value);                         // set the query state to the value of the clicked item
       setShowSuggestions(false); // to hide the list
       setCurrentCity(value); // set the currentCity state to the value of the clicked item
+      setInfoAlert(""); // if someone clicks on a suggestion, the info alert should disappear
    };
 
    // this UI component renders a text input field and a list of suggestions
