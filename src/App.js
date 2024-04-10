@@ -3,7 +3,7 @@ import CitySearch from './components/CitySearch';
 import EventList from './components/EventList';
 import NumberOfEvents from './components/NumberOfEvents';
 import { extractLocations, getEvents } from './api';
-import { InfoAlert } from './components/Alert';
+import { InfoAlert, ErrorAlert } from './components/Alert';
 import './App.css';
 
 // App component is the parent component that renders the CitySearch, NumberOfEvents, and EventList components
@@ -14,6 +14,7 @@ function App() {
    const [currentCity, setCurrentCity] = useState("See all cities");      // 'currentCity' holds the currently selected city
    const [isLoading, setIsLoading] = useState(true);                     // 'isLoading' is flag to indicate if the data is currently being fetched
    const [infoAlert, setInfoAlert] = useState("");                       // 'infoAlert' holds the message to be displayed in the info alert
+   const [errorAlert, setErrorAlert] = useState("");                     // 'errorAlert' holds the message to be displayed in the error alert
 
    // useeffect hook to fetch the list of events and set the events state when the component mounts, 
    // AND conditionally rerender the component when the currentCity or currentNOE state changes
@@ -46,8 +47,10 @@ function App() {
          <div className="alerts-container">
             {/* Display the info alert if the infoAlert state is not empty */}
             {infoAlert.length ? <InfoAlert text={infoAlert} /> : null}
+            {/* Display the error alert if the errorAlert length is not zero */}
+            {errorAlert.length ? <ErrorAlert text={errorAlert} /> : null}
          </div>
-         <NumberOfEvents currentNOE={currentNOE} setCurrentNOE={setCurrentNOE} />
+         <NumberOfEvents currentNOE={currentNOE} setCurrentNOE={setCurrentNOE} setErrorAlert={setErrorAlert} />
          {isLoading ? (
             <h2 className="loading-message">
                Loading events
