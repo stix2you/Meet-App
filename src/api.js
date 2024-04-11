@@ -41,15 +41,15 @@ const removeQuery = () => {
 // This function will fetch the list of all events
 export const getEvents = async () => {
 
-   // check if the app is running in the local environment, and if so return the mock data
-   if (window.location.href.startsWith('http://localhost')) {
-      return Array.isArray(mockData) ? mockData : [];    // return the mock data if it is an array, otherwise return an empty array
-   }
-
    if (!navigator.onLine) {
       const events = localStorage.getItem("lastEvents");
       NProgress.done();
       return events ? JSON.parse(events) : [];
+   }
+
+   // check if the app is running in the local environment, and if so return the mock data
+   if (window.location.href.startsWith('http://localhost')) {
+      return Array.isArray(mockData) ? mockData : [];    // return the mock data if it is an array, otherwise return an empty array
    }
 
    // get the access token
