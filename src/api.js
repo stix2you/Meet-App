@@ -1,4 +1,5 @@
 import mockData from './mock-data';
+import NProgress from 'nprogress';
 
 //  * @param {*} events:
 //  * The following function should be in the “api.js” file.
@@ -45,6 +46,12 @@ export const getEvents = async () => {
       return Array.isArray(mockData) ? mockData : [];    // return the mock data if it is an array, otherwise return an empty array
    }
 
+   if (!navigator.onLine) {
+      const events = localStorage.getItem("lastEvents");
+      NProgress.done();
+      return events ? JSON.parse(events) : [];
+   }
+
    // get the access token
    const token = await getAccessToken();
 
@@ -55,7 +62,15 @@ export const getEvents = async () => {
       try {
          const response = await fetch(url);
          const result = await response.json();
-         return Array.isArray(result) ? result : [];  // return the list of events if the result is an array, otherwise return an empty array
+         if (result) {
+            NProgress.done();
+            localStorage.setItem("lastEvents", JSON.stringify(result.events));
+            return Array.isArray(result) ? result : [];  // return the list of events if the result is an array, otherwise return an empty array
+            // return result.events;
+         } else {
+            return null;
+         }
+         // return Array.isArray(result) ? result : [];  // return the list of events if the result is an array, otherwise return an empty array
       } catch (error) {
          console.error('Error fetching events:', error);  // log an error if there is an error fetching the events
       }
