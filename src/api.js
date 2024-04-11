@@ -68,8 +68,8 @@ export const getEvents = async () => {
          if (result) {
             NProgress.done();
             localStorage.setItem("lastEvents", JSON.stringify(result.events));
-            console.log('online events in the online logic of getEvents:', result);
-            console.log('online events in the online logic of getEvents:', result.events);
+            console.log('online result in the online logic of getEvents:', result);
+            console.log('online result.events in the online logic of getEvents:', result.events);
             return Array.isArray(result) ? result : [];  // return the list of events if the result is an array, otherwise return an empty array
             // return result.events;
          } else return null;
