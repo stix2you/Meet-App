@@ -1,4 +1,5 @@
 import mockData from './mock-data';
+import NProgress from 'nprogress';
 
 //  * @param {*} events:
 //  * The following function should be in the “api.js” file.
@@ -40,6 +41,12 @@ const removeQuery = () => {
 // This function will fetch the list of all events
 export const getEvents = async () => {
 
+   if (!navigator.onLine) {
+      const events = localStorage.getItem("lastEvents");
+      NProgress.done();
+      return events ? JSON.parse(events) : [];
+   }
+
    // check if the app is running in the local environment, and if so return the mock data
    if (window.location.href.startsWith('http://localhost')) {
       return Array.isArray(mockData) ? mockData : [];    // return the mock data if it is an array, otherwise return an empty array
@@ -55,7 +62,11 @@ export const getEvents = async () => {
       try {
          const response = await fetch(url);
          const result = await response.json();
-         return Array.isArray(result) ? result : [];  // return the list of events if the result is an array, otherwise return an empty array
+         if (result) {
+            NProgress.done();
+            localStorage.setItem("lastEvents", JSON.stringify(result.events));
+            return result.events;
+         } else return null;
       } catch (error) {
          console.error('Error fetching events:', error);  // log an error if there is an error fetching the events
       }
@@ -97,3 +108,31 @@ export const getAccessToken = async () => {
    }
    return accessToken;
 };
+
+
+
+// This function will fetch the list of all events
+// export const getEvents = async () => {
+
+//    // check if the app is running in the local environment, and if so return the mock data
+//    if (window.location.href.startsWith('http://localhost')) {
+//       return Array.isArray(mockData) ? mockData : [];    // return the mock data if it is an array, otherwise return an empty array
+//    }
+
+//    // get the access token
+//    const token = await getAccessToken();
+
+//    // if the token is valid, fetch the list of events from the API
+//    if (token) {
+//       removeQuery();      // remove the query from the URL,
+//       const url = "https://j1afvdafm1.execute-api.us-east-2.amazonaws.com/dev/api/get-events" + "/" + token;
+//       try {
+//          const response = await fetch(url);
+//          const result = await response.json();
+//          return Array.isArray(result) ? result : [];  // return the list of events if the result is an array, otherwise return an empty array
+//       } catch (error) {
+//          console.error('Error fetching events:', error);  // log an error if there is an error fetching the events
+//       }
+//    }
+//    return []; // Ensure function always returns an array
+// };
