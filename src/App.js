@@ -3,8 +3,9 @@ import CitySearch from './components/CitySearch';
 import EventList from './components/EventList';
 import NumberOfEvents from './components/NumberOfEvents';
 import { extractLocations, getEvents } from './api';
-import { InfoAlert, ErrorAlert } from './components/Alert';
+import { InfoAlert, ErrorAlert, WarningAlert } from './components/Alert';
 import './App.css';
+import { set } from 'nprogress';
 
 // App component is the parent component that renders the CitySearch, NumberOfEvents, and EventList components
 function App() {
@@ -15,10 +16,18 @@ function App() {
    const [isLoading, setIsLoading] = useState(true);                     // 'isLoading' is flag to indicate if the data is currently being fetched
    const [infoAlert, setInfoAlert] = useState("");                       // 'infoAlert' holds the message to be displayed in the info alert
    const [errorAlert, setErrorAlert] = useState("");                     // 'errorAlert' holds the message to be displayed in the error alert
+   const [warningAlert, setWarningAlert] = useState("");                 // 'warningAlert' holds the message to be displayed in the warning alert
 
    // useeffect hook to fetch the list of events and set the events state when the component mounts, 
    // AND conditionally rerender the component when the currentCity or currentNOE state changes
    useEffect(() => {
+      if (navigator.onLine) {
+         // set the warning alert message to an empty string ""
+         setWarningAlert("");
+       } else {
+         // set the warning alert message to a non-empty string
+         setWarningAlert("You are offline. This list may not be up to date.");
+       }
       fetchData();
    }, [currentCity, currentNOE]); // callback of useEffect will be called whenever it detects a change in currentCity or currentNOE
 
@@ -49,6 +58,8 @@ function App() {
             {infoAlert.length ? <InfoAlert text={infoAlert} /> : null}
             {/* Display the error alert if the errorAlert length is not zero */}
             {errorAlert.length ? <ErrorAlert text={errorAlert} /> : null}
+            {/* Display the warning alert if the warningAlert length is not zero */}
+            {warningAlert.length ? <WarningAlert text={warningAlert} /> : null}
          </div>
          <NumberOfEvents currentNOE={currentNOE} setCurrentNOE={setCurrentNOE} setErrorAlert={setErrorAlert} />
          {isLoading ? (
