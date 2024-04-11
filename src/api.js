@@ -42,9 +42,11 @@ const removeQuery = () => {
 export const getEvents = async () => {
 
    if (!navigator.onLine) {
+      console.log('offline logic of getEvents fired');
       const events = localStorage.getItem("lastEvents");
       NProgress.done();
-      return events ? JSON.parse(events) : [];
+      console.log('offline events in the offline logic of getEvents:', events);
+      return events ? JSON.parse(events) : [];  // return the list of events if the result is an array, otherwise return an empty array
    }
 
    // check if the app is running in the local environment, and if so return the mock data
@@ -60,12 +62,15 @@ export const getEvents = async () => {
       removeQuery();      // remove the query from the URL, 
       const url = "https://j1afvdafm1.execute-api.us-east-2.amazonaws.com/dev/api/get-events" + "/" + token;
       try {
+         console.log('online logic of getEvents fired');
          const response = await fetch(url);
          const result = await response.json();
          if (result) {
             NProgress.done();
             localStorage.setItem("lastEvents", JSON.stringify(result.events));
-            return result.events;
+            console.log('online events in the online logic of getEvents:', result.events);
+            return Array.isArray(result) ? result : [];  // return the list of events if the result is an array, otherwise return an empty array
+            // return result.events;
          } else return null;
       } catch (error) {
          console.error('Error fetching events:', error);  // log an error if there is an error fetching the events
