@@ -5,7 +5,6 @@ import NumberOfEvents from './components/NumberOfEvents';
 import { extractLocations, getEvents } from './api';
 import { InfoAlert, ErrorAlert, WarningAlert } from './components/Alert';
 import './App.css';
-import { set } from 'nprogress';
 
 // App component is the parent component that renders the CitySearch, NumberOfEvents, and EventList components
 function App() {
