@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import CitySearch from './components/CitySearch';
 import EventList from './components/EventList';
 import NumberOfEvents from './components/NumberOfEvents';
+import CityEventsChart from './components/CityEventsChart';
 import { extractLocations, getEvents } from './api';
 import { InfoAlert, ErrorAlert, WarningAlert } from './components/Alert';
 import './App.css';
@@ -23,10 +24,10 @@ function App() {
       if (navigator.onLine) {
          // set the warning alert message to an empty string ""
          setWarningAlert("");
-       } else {
+      } else {
          // set the warning alert message to a non-empty string
          setWarningAlert("You are offline. This list may not be up to date.");
-       }
+      }
       fetchData();
    }, [currentCity, currentNOE]); // callback of useEffect will be called whenever it detects a change in currentCity or currentNOE
 
@@ -67,7 +68,10 @@ function App() {
                <div className="loading-dots"><span>.</span><span>.</span><span>.</span></div>
             </h2>
          ) : (
-            <EventList events={events} />
+            <div className="events-found">
+               <CityEventsChart allLocations={allLocations} events={events} />
+               <EventList events={events} />
+            </div>
          )}
       </div>
    );

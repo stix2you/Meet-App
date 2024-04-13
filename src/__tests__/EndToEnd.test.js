@@ -51,6 +51,8 @@ describe('Filter events by city', () => {
       });
 
       page = await browser.newPage();
+      page.setViewport({ width: 1280, height: 800 }); // Set a specific viewport size -- 
+      // when running in headless mode, the default viewport is 800x600, which may not allow certain items to render to be tested properly.
       await page.goto('http://localhost:3000/');
    });
 
@@ -130,7 +132,7 @@ describe('Specify Number of Events', () => {
 
    test('User can change the number of events displayed', async () => {
       await clearInput('input.number-of-events');  // clear the input field first
-      await page.type('input.number-of-events', '10', {delay: 50});  // type 10 in the input field
+      await page.type('input.number-of-events', '10', { delay: 50 });  // type 10 in the input field
 
       await page.waitForFunction('document.querySelectorAll("[data-testid=\'event\']").length === 10'); // wait for the number of events to be 10
       const events = await page.$$('[data-testid="event"]');   // get all the events
