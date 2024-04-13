@@ -1,10 +1,11 @@
 // This component displays a pie chart of the number of events for each genre, using the recharts library
 import { useState, useEffect } from 'react';
-import { ResponsiveContainer, PieChart, Pie } from 'recharts';
+import { ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 
 const EventGenresChart = ({ events }) => {
    const [data, setData] = useState([]);  // 'data' holds the data for the chart
    const genres = ['React', 'JavaScript', 'Node', 'jQuery', 'AngularJS'];  // genres array
+   const colors = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#85144b'];
 
    // useEffect hook to set the data state when the component mounts
    useEffect(() => {
@@ -31,7 +32,7 @@ const EventGenresChart = ({ events }) => {
          <text
             x={x}
             y={y}
-            fill="#8884d8"
+            fill={colors[index]}
             textAnchor={x > cx ? 'start' : 'end'}
             dominantBaseline="central"
          >
@@ -50,7 +51,11 @@ const EventGenresChart = ({ events }) => {
                labelLine={false}
                label={renderCustomizedLabel}
                outerRadius={130}
-            />
+            >
+               {data.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
+               ))}
+            </Pie>
          </PieChart>
       </ResponsiveContainer>
    );
