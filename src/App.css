@@ -169,3 +169,15 @@ input[type="number"] {
    transform: translate(-50%, -20%); /* Adjust position to true center */
    z-index: 1000;
 }
+
+/* Styling for the charts container and responsive functionality */
+.charts-container {
+   display: grid;
+   grid-template-columns: 1fr 1fr;
+}
+
+@media (max-width: 768px) {
+   .charts-container {
+   grid-template-columns: 1fr;
+   }
+}

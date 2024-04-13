@@ -1,28 +1,26 @@
-// // This file is used to set up the testing environment before each test file is run.
-
-
+// This file is used to set up the testing environment before each test file is run.
 import '@testing-library/jest-dom';
 
 // adjust Jest's default timeout if tests are long-running
 jest.setTimeout(30000);
 
 // Mocking ResizeObserver globally
-// Extend the global environment to include a mock of the ResizeObserver.
+// Extend the global environment to include a mock of the ResizeObserver
 class MockResizeObserver {
    constructor(callback) {
        this.callback = callback;
        this.elements = [];
    }
 
+   // ResizeObserver will observe the element
    observe(element) {
-       this.elements.push(element);
-       // Simulate the observation with more detailed mock entries
-       // Specifically provide some dummy dimensions
-       const rect = element.getBoundingClientRect();
+       this.elements.push(element);  // add the element to the elements array
+       const rect = element.getBoundingClientRect();  // get the size of the element
+       // call the callback function with the element and its size
        this.callback([{
            target: element,
            contentRect: rect
-       }], this);
+       }], this);  
    }
 
    unobserve(element) {
@@ -34,6 +32,7 @@ class MockResizeObserver {
    }
 }
 
+// Define the ResizeObserver on the window object (the window object is the global object in the browser)
 Object.defineProperty(window, 'ResizeObserver', {
    writable: true,
    configurable: true,
