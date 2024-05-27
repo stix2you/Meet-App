@@ -4,7 +4,7 @@ Meet App is a serverless, progressive web app, which is an electronic bulleton b
 To Build and Deploy:
 Build with npx react to include PWA coding templates:
 npx create-react-app meet --template cra-template-pwa --use-npm
-Add to package.json after "private: true":  "homepage": "https://YOUR_USER_NAME.github.io/meet", 
+Add to package.json after "private: true":  "homepage": "https://YOUR_USER_NAME.github.io/Meet-App", 
 Add to package.json in scripts section:  
 "predeploy": "npm run build",
 "deploy": "gh-pages -d build"
@@ -22,7 +22,7 @@ No API used.
 
 Tech Stack used: MERN
 
-Live URL: https://stix2you.github.io/meet/
+Live URL: https://stix2you.github.io/Meet-App/
 
 
 
