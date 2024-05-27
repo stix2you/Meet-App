@@ -1,7 +1,11 @@
-Project description:
-Meet App is a serverless, progressive web app, which is an electronic bulleton board for events in cities around the globe.  It allows users to get information about upcoming events in any city, and to filter the results by city or keyword. Additionally, users may choose to view charts depicting data about the number of events in a given area, as well as the popularity of various event genres.
+# Welcome To Meet-App
+<br>
 
-To Build and Deploy:
+## Project description:
+Meet App is a serverless, progressive web app, which is an electronic bulleton board for events in cities around the globe.  It allows users to get information about upcoming events in any city, and to filter the results by city or keyword. Additionally, users may choose to view charts depicting data about the number of events in a given area, as well as the popularity of various event genres.
+<br>
+
+## To Build and Deploy:
 Build with npx react to include PWA coding templates:
 npx create-react-app meet --template cra-template-pwa --use-npm
 Add to package.json after "private: true":  "homepage": "https://YOUR_USER_NAME.github.io/Meet-App", 
@@ -9,14 +13,15 @@ Add to package.json in scripts section:
 "predeploy": "npm run build",
 "deploy": "gh-pages -d build"
 Push changes to repo and deploy with terminal command:  "npm run deploy"
+<br>
 
-Project dependencies:
+## Project dependencies:
 React v. 18.2.0
 React-dom v. 18.2.0
 React-scripts v. 5.0.1
 gh-pages installed
 cra-template-pwa starter codebase installed 
-(...or just copy dependencies from package.json and execute "npm install" from terminal)
+(...or copy dependencies from package.json and execute "npm install" from terminal)
 
 No API used.
 
@@ -26,9 +31,8 @@ Live URL: https://stix2you.github.io/Meet-App/
 
 
 
-======================
-Meet App User Stories:
-======================
+
+## Meet App User Stories:
 
 Feature 1: Filter Events By City
 As a user, 
@@ -63,13 +67,12 @@ so that I can easily group and visualize common attributes of different events.
 
 
 
-===================
-Meet App Scenarios:
-===================
 
---------------------------------
-Feature 1: Filter Events By City
---------------------------------
+## Meet App Scenarios:
+
+
+### Feature 1: Filter Events By City
+
 
 Scenario 1: When user hasn’t searched for a city, show upcoming events from all cities.
  - Given a user hasn't search for any city,
@@ -89,9 +92,9 @@ Scenario 3: User can select a city from the suggested list.
 
 
 
-----------------------------------
-Feature 2: Show/Hide Event Details
-----------------------------------
+
+### Feature 2: Show/Hide Event Details
+
 
 Scenario 1: An event element is collapsed by default.
  - Given any number of events have been displayed on the screen,
@@ -112,9 +115,9 @@ Scenario 3: User can collapse an event to hide details.
 
 
 
------------------------------------
-Feature 3: Specify Number of Events
------------------------------------
+
+### Feature 3: Specify Number of Events
+
 
 Scenario 1: When user hasn’t specified a number, 32 events are shown by default.
  - Given the main page is open, 
@@ -129,9 +132,9 @@ Scenario 2: User can change the number of events displayed.
 
 
 
------------------------------------
-Feature 4: Use the App When Offline
------------------------------------
+
+### Feature 4: Use the App When Offline
+
 
 Scenario 1: Show cached data when there’s no internet connection.
  - Given the internet connection was lost or not established,
@@ -146,9 +149,9 @@ Scenario 2: Show error when user changes search settings (city, number of events
 
 
 
--------------------------------------------------
-Feature 5: Add an App Shortcut to the Home Screen
--------------------------------------------------
+
+### Feature 5: Add an App Shortcut to the Home Screen
+
 
 Scenario 1: User can install the meet app as a shortcut on their device home screen.
  - Given the user has navigated to the web page for the app
@@ -157,9 +160,9 @@ Scenario 1: User can install the meet app as a shortcut on their device home scr
 
 
 
----------------------------------------------------
-Feature 6: Display Charts Visualizing Event Details
----------------------------------------------------
+
+### Feature 6: Display Charts Visualizing Event Details
+
 
 Scenario 1: Show a chart with the number of upcoming events in each city.
  - Given a city has been selected
@@ -168,9 +171,9 @@ Scenario 1: Show a chart with the number of upcoming events in each city.
 
 
 
-----------------------------------------------------
-How I will use serverless functions in the Meet App:
-----------------------------------------------------
+
+### How I will use serverless functions in the Meet App:
+
 
 I will use serverless for authorization and to fetch calendar events.  This will consist of three functions:
 
