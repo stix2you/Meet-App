@@ -8,6 +8,8 @@ const redirect_uris = [
    "https://stix2you.github.io/Meet-App/"
 ];
 
+console.log('Redirect URI:', redirect_uris);
+
 const oAuth2Client = new google.auth.OAuth2(
    CLIENT_ID,
    CLIENT_SECRET,
