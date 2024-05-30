@@ -13,6 +13,7 @@ Add to package.json in scripts section:
 "predeploy": "npm run build",
 "deploy": "gh-pages -d build"
 Push changes to repo and deploy with terminal command:  "npm run deploy"
+*** IMPORTANT ***: Repo must be named "Meet-App" -- if this is different for your build, be sure to adjust redirect_uris in handler.js to match the proper endpoint!  It should match your homepage URL above.
 <br>
 
 ## Project dependencies:
