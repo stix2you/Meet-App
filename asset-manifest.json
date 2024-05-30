@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "/meet/static/css/main.caf16cac.css",
+    "main.js": "/meet/static/js/main.2f334603.js",
+    "static/js/453.5dc7ca0f.chunk.js": "/meet/static/js/453.5dc7ca0f.chunk.js",
+    "static/media/city_bkgd2.webp": "/meet/static/media/city_bkgd2.54e8b04e8117cfcddead.webp",
+    "service-worker.js": "/meet/service-worker.js",
+    "index.html": "/meet/index.html",
+    "main.caf16cac.css.map": "/meet/static/css/main.caf16cac.css.map",
+    "main.2f334603.js.map": "/meet/static/js/main.2f334603.js.map",
+    "453.5dc7ca0f.chunk.js.map": "/meet/static/js/453.5dc7ca0f.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.caf16cac.css",
+    "static/js/main.2f334603.js"
+  ]
+}
