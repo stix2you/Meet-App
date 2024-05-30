@@ -6,6 +6,7 @@ Meet App is a serverless, progressive web app, which is an electronic bulleton b
 <br>
 
 ## To Build and Deploy:
+*** MUST USE npm run deploy ***
 Build with npx react to include PWA coding templates:
 npx create-react-app meet --template cra-template-pwa --use-npm
 Add to package.json after "private: true":  "homepage": "https://YOUR_USER_NAME.github.io/Meet-App", 
